@@ -1,5 +1,15 @@
 <html>
+<head>
 <style>
+@import url(https://www.1001fonts.com/orange-kid-font.html?size=40);
+@font-face{
+  font-family: "pokefont";
+  src: url(https://www.1001fonts.com/orange-kid-font.html?size=40);
+}
+label{
+font-family: "pokefont";
+}
+
 .boxed {
   border: 5px solid #3a7bd4 ;
   border-radius: 25px;
@@ -7,9 +17,21 @@
   background: #Eaeeef;
   padding: 20px;
   height: 150px;
-  width: 700px;
+  width: 600px;
   margin: auto;
+   display: inline-block;
+   margin-left: auto;
+   margin-right: auto;
+   text-align: left;
 }
+
+div.boxed
+{
+    display: block;
+    text-align: center;
+}
+
+
 body {
 background-image: url("https://wallpapercave.com/wp/wp2432933.jpg");
 background-repeat: no-repeat;
@@ -17,17 +39,23 @@ background-size: cover;
 background-color: #cccccc;
 }
 </style>
+</head>
   <body background= href="https://pixelz.cc/images/pokemon-poke-ball-wqhd-1440p-wallpaper/">
     <p align="center"><a 
     href="https://fontmeme.com/pokemon- 
     font/"><img 
 src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png" alt="pokemon-font" border="0"></a>
 <div class="boxed">
-  <form>
-  <label for="Login" align="middle">Login:</label><br>
+  <form method="post">
+  <label for="Login" align="middle">Username:</label><br>
   <input type="text" id="Login" name="Login"><br>
   <label for="password" align="middle">Password:</label><br>
   <input type="text" id="password" name="password">
+  </br></br>
+  <input type="submit" value="Login">
+  <form action="https://people-Dex.xyz/register">
+    <input type="submit" value="Register" />
+</form>
 </form>
 </div>
   </body>
