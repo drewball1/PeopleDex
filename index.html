@@ -13,13 +13,31 @@ h1{
 font-family:"pokefont";
 }
 
+.loginresult{
+font-family: "pokefont"
+color: red;
+}
+
+button{
+font-family: "pokefont";
+}
+
+.submitbutton {
+font-family: "pokefont";
+font-size: 18px;
+color: #356ABC;
+background-color: #ffcd00;
+border-radius: 15px;
+border: 3px solid #356ABC;
+}
+
 .boxed {
-  border: 5px solid #3a7bd4 ;
+  border: 5px solid #356ABC ;
   border-radius: 25px;
   border-style: double;
   background: #Eaeeef;
   padding: 20px;
-  height: 250px;
+  height: auto;
   width: 600px;
   margin: auto;
   display: inline-block;
@@ -54,13 +72,16 @@ src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"
   <h1 style="font-size:40px;font-family:"pokefont";">Sign in:</h1>
   <form method="post">
     <label for="Login" align="middle">Username:</label><br>
-    <input type="text" id="Login" name="Login"><br>
+    <input type="text" id="loginName" name="Login" required><br>
     <label for="password" align="middle">Password:</label><br>
-    <input type="password" id="password" name="password">
+    <input type="password" id="loginPassword" name="password" required>
     </br></br>
-    <input type="submit" value="Login">
-    <button type="button" onclick="window.location.href='register.html'">Register</button>
+    <button type="button" class="submitbutton" onclick="Login()">Login</button>
   </form>
+	<p class="loginresult" id="loginResult"></p>
+	<h1 style="font-size:40px;font-family:"pokefont";">-or-</h1>
+    	<button type="button" class="submitbutton" onclick="window.location.href='register.html'">Register(New Users)</button></br>
+    	</br><button type="button" class="submitbutton" onclick="window.location.href='dex.html'">TEST!</button>
 </div>
   </body>
 </html>
