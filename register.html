@@ -13,13 +13,20 @@ h1{
 font-family:"pokefont";
 }
 
+.submitbutton {
+color: #356ABC;
+background-color: #ffcd00;
+border-radius: 40px;
+border: 3px solid #356ABC;
+}
+
 .boxed {
-  border: 5px solid #3a7bd4 ;
+  border: 5px solid #356ABC ;
   border-radius: 25px;
   border-style: double;
   background: #Eaeeef;
   padding: 20px;
-  height: 250px;
+  height: auto;
   width: 600px;
   margin: auto;
   display: inline-block;
@@ -52,13 +59,16 @@ src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"
 <div class="boxed">
     <h1 style="font-size:40px;font-family:"pokefont";">Register New Account:</h1>
   <form method="post">
-  <label for="Login" align="middle">Enter New Username:</label><br>
-  <input type="text" id="Login" name="Login"><br>
-  <label for="password" align="middle">Enter Password:</label><br>
-  <input type="password" id="password" name="password">
+  <label for="firstName" align="middle">First Name:</label><br>
+  <input type="text" id="firstName" name="firstName" required><br>
+  <label for="LastName" align="middle">Last Name:</label><br>
+  <input type="text" id="lastName" name="LastName" required><br>
+  <label for="Login" align="middle">Enter New Account Username:</label><br>
+  <input type="text" id="loginName" name="Login" required><br>
+  <label for="password" align="middle">Enter New Account Password:</label><br>
+  <input type="password" id="loginPassword" name="password" required>
   </br></br>
-  <input type="submit" value="Submit Registration">
-</form>
+  <button type="submit" class="submitbutton">Submit Registration</button>
 </form>
 </div>
   </body>
