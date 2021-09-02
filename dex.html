@@ -1,0 +1,171 @@
+<html>
+<head>
+<style>
+@font-face{
+  font-family: "pokefont";
+  src: url(pokefont.ttf);
+}
+input[type=submit]{
+font-family: "pokefont";
+font-size: 20px;
+}
+button{
+font-family: "pokefont";
+}
+
+.submitbutton {
+font-family: "pokefont";
+font-size: 20px;
+color: #356ABC;
+background-color: #ffcd00;
+border-radius: 40px;
+border: 3px solid #356ABC;
+}
+
+.searchbutton {
+font-family: "pokefont";
+font-size: 15px;
+color: #356ABC;
+background-color: #ffcd00;
+border-radius: 40px;
+border: 3px solid #356ABC;
+}
+
+h1{
+font-family:"pokefont";
+}
+
+.boxed {
+  border: 5px solid #356ABC;
+  border-radius: 25px;
+  border-style: double;
+  background: #Eaeeef;
+  padding: 20px;
+  height: auto;
+  width: 70%;
+  margin: auto;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-family:"pokefont";
+}
+.boxedletter {
+  border: 5px solid #3a7bd4;
+  border-radius: 25px;
+  border-style: double;
+  background: #Eaeeef;
+  padding: 20px;
+  height: auto;
+  width: 70%;
+  margin: auto;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-family:"pokefont";
+}
+
+div.boxed
+{
+    display: block;
+    text-align: center;
+    font-family:"pokefont";
+}
+div.boxedletter
+{
+    display: block;
+    text-align: center;
+    font-family:"pokefont";
+}
+
+
+
+body {
+background-image: url("https://wallpapercave.com/wp/wp2432933.jpg");
+background-repeat: no-repeat;
+background-size: cover;
+background-color: #cccccc;
+}
+</style>
+</head>
+
+  <body background= href="https://pixelz.cc/images/pokemon-poke-ball-wqhd-1440p-wallpaper/">
+    <p align="center"><a 
+    href="index.html"><img 
+src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png" alt="pokemon-font" border="0"></a>
+<div class="boxed">
+	
+	<h1 id="header" style="font-size:40px;font-family:'pokefont';">What would you like to do?</h1>
+	<div id="createForm" style="display:none">
+		<label for='contactFirstName'>First Name:</label></br>
+    	 	<input type='text' id='contactFirstName' name='fname' required></br>
+		<label for='contactLastName'>Last Name:</label></br>
+    		<input type='text' id='contactLastName' name='lname' required></br>
+		<label for='contactEmail'>Email:</label></br>
+    		<input type='text' id='contactEmail' name='email' required></br>
+		<label for='contactPhone'>Phone Number:</label></br>
+    		<input type='text' id='phoneNumber' name='phone' required></br></br>
+		<button type="button" class="submitbutton" onclick="createContact();">Catch Person!</button>
+		<button type="button" class="submitbutton" onclick="cancelCreate();">Cancel</button>
+
+	</div>
+	<button type="button" id=createButton class= submitbutton onclick="createContactField();">Create Contact</button>
+	<script>
+	function createContactField(){
+		document.getElementById("createForm").style.display = 'block';
+		document.getElementById("searchBox").style.visibility = 'hidden';
+		document.getElementById("createButton").style.visibility = 'hidden';
+		document.getElementById("letterSearch").style.visibility = 'hidden';
+		document.getElementById("header").innerHTML = "Enter Contact Information:";
+	}
+
+	function cancelCreate(){
+		document.getElementById("createForm").style.display = 'none';
+		document.getElementById("contactFirstName").value = '';
+		document.getElementById("contactLastName").value = '';
+		document.getElementById("contactEmail").value = '';
+		document.getElementById("phoneNumber").value = '';
+		document.getElementById("searchBox").style.visibility = 'visible';
+		document.getElementById("createButton").style.visibility = 'visible';
+		document.getElementById("letterSearch").style.visibility = 'visible';
+		document.getElementById("header").innerHTML = "What would you like to do?";
+	}
+	</script>
+    </br></br>
+	<form id="searchBox"> 
+		<input type="search" id="query" name="query" placeholder="Search...">
+		<button type = "button" class="searchbutton" onclick="searchContacts()">Search Box</button>
+	</form>
+</div>
+<div class="boxedletter" id="letterSearch">
+<button type="button" onclick="searchLtr(a)">A</button>
+<button type="button" onclick="searchLtr(b)">B</button>
+<button type="button" onclick="searchLtr(c)">C</button>
+<button type="button" onclick="searchLtr(d)">D</button>
+<button type="button" onclick="searchLtr(e)">E</button>
+<button type="button" onclick="searchLtr(f)">F</button>
+<button type="button" onclick="searchLtr(g)">G</button>
+<button type="button" onclick="searchLtr(h)">H</button>
+<button type="button" onclick="searchLtr(i)">I</button>
+<button type="button" onclick="searchLtr(j)">J</button>
+<button type="button" onclick="searchLtr(k)">K</button>
+<button type="button" onclick="searchLtr(l)">L</button>
+<button type="button" onclick="searchLtr(m)">M</button>
+<button type="button" onclick="searchLtr(n)">N</button>
+<button type="button" onclick="searchLtr(o)">O</button>
+<button type="button" onclick="searchLtr(p)">P</button>
+<button type="button" onclick="searchLtr(q)">Q</button>
+<button type="button" onclick="searchLtr(r)">R</button>
+<button type="button" onclick="searchLtr(s)">S</button>
+<button type="button" onclick="searchLtr(t)">T</button>
+<button type="button" onclick="searchLtr(u)">U</button>
+<button type="button" onclick="searchLtr(v)">V</button>
+<button type="button" onclick="searchLtr(w)">W</button>
+<button type="button" onclick="searchLtr(x)">X</button>
+<button type="button" onclick="searchLtr(y)">Y</button>
+<button type="button" onclick="searchLtr(z)">Z</button>
+</div>
+
+  </body>
+</html>
