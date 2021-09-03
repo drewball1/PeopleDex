@@ -1,74 +1,30 @@
 <html>
 <head>
-<style>
-@font-face{
-  font-family: "pokefont";
-  src: url(pokefont.ttf);
-}
-label{
-font-family: "pokefont";
-}
-
-h1{
-font-family:"pokefont";
-}
-
-.submitbutton {
-color: #356ABC;
-background-color: #ffcd00;
-border-radius: 40px;
-border: 3px solid #356ABC;
-}
-
-.boxed {
-  border: 5px solid #356ABC ;
-  border-radius: 25px;
-  border-style: double;
-  background: #Eaeeef;
-  padding: 20px;
-  height: auto;
-  width: 600px;
-  margin: auto;
-  display: inline-block;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: left;
-  font-family:"pokefont";
-}
-
-div.boxed
-{
-    display: block;
-    text-align: center;
-    font-family:"pokefont";
-}
-
-
-body {
-background-image: url("https://wallpapercave.com/wp/wp2432933.jpg");
-background-repeat: no-repeat;
-background-size: cover;
-background-color: #cccccc;
-}
-</style>
+    <script type="text/javascript" src="js/code.js"></script>
+    <script type="text/javascript" src="js/md5.js"></script>
+      <link href="css/styles.css" rel="stylesheet">	
+    
+    <script type="text/javascript">
+    </script>
 </head>
-  <body background= href="https://pixelz.cc/images/pokemon-poke-ball-wqhd-1440p-wallpaper/">
+  <body>
     <p align="center"><a 
     href="index.html"><img 
 src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png" alt="pokemon-font" border="0"></a>
 <div class="boxed">
-    <h1 style="font-size:40px;font-family:"pokefont";">Register New Account:</h1>
-  <form method="post">
-  <label for="firstName" align="middle">First Name:</label><br>
+    <h1 style="font-size:40px;font-family:'pokefont';">Register New Account:</h1>
+  <div id="registrationBox">
+  <label for="firstName">First Name:</label><br>
   <input type="text" id="firstName" name="firstName" required><br>
-  <label for="LastName" align="middle">Last Name:</label><br>
-  <input type="text" id="lastName" name="LastName" required><br>
-  <label for="Login" align="middle">Enter New Account Username:</label><br>
+  <label for="lastName">Last Name:</label><br>
+  <input type="text" id="lastName" name="lastName" required><br>
+  <label for="Login">Enter New Account Username:</label><br>
   <input type="text" id="loginName" name="Login" required><br>
-  <label for="password" align="middle">Enter New Account Password:</label><br>
+  <label for="password">Enter New Account Password:</label><br>
   <input type="password" id="loginPassword" name="password" required>
   </br></br>
-  <button type="submit" class="submitbutton">Submit Registration</button>
-</form>
+  <button type="submit" class="submitbutton" onclick="register();">Submit Registration</button>
+  <p id="registerError" style="color:red; font-size:40;"></p>
+</div>
 </div>
   </body>
