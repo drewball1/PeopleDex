@@ -33,7 +33,7 @@ class User  {
     }
 
     //get specific user based on login and password
-    public function searchUserLogin($userLogin, $userPass)   {
+    public function searchUserLogin()   {
         $query = "SELECT
             ID,
             DateCreated,
@@ -45,12 +45,53 @@ class User  {
         FROM
             $this->table
         WHERE
-            Login = $userLogin AND Password = $userPass";
+            Login = :login AND Password = :password";
+
+        //Sanitizes for html insertion
+        $this->login = htmlspecialchars($this->login);
+        $this->password = htmlspecialchars($this->password);
 
         $statement = $this->conn->prepare($query);
-        $statement->execute();
+        $statement->bindParam(':login', $this->login);
+        $statement->bindParam(':password', $this->password);
 
         return $statement;
+    }
+
+    public function registerUser()  {
+        $request = "IF NOT EXISTS (SELECT Login AND Password FROM $this->table
+            WHERE Login = :login
+            AND Password = :password)
+        BEGIN
+            INSERT INTO $this->table (FirstName, LastName, Login, Password)
+            VALUES (:firstName, :lastName, :login, :password)";
+
+        $statement = $this->conn->prepare($request);
+
+        //sanitize
+        $this->login = htmlspecialchars($this->login);
+        $this->password = htmlspecialchars($this->password);
+        $this->firstName = htmlspecialchars($this->firstName);
+        $this->lastName = htmlspecialchars($this->lastName);
+        $this->login = htmlspecialchars($this->login);
+        $this->password = htmlspecialchars($this->password);
+
+        //bind
+        $statement->bindParam(':login', $this->login);
+        $statement->bindParam(':password', $this->password);
+        $statement->bindParam(':firstName', $this->firstName);
+        $statement->bindParam(':lastName', $this->lastName);
+        $statement->bindParam(':login', $this->login);
+        $statement->bindParam(':password', $this->password);
+
+        if($statement->execute())   {
+            return true;
+        }
+        else    {
+            //if it failed we see the error
+            echo("Error: $statement->error");
+            return false;
+        }
     }
 }
 
