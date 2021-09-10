@@ -29,7 +29,7 @@ if($numofResults > 0)   {
         extract($rowInfo);
 
         $contactInfo = array('ContactID' => $ContactID, 'FirstName' => $FirstName,
-            'LastName' => $LastName, 'Address' => $Address, 'PhoneNumber' => $PhoneNumber,
+            'LastName' => $LastName, 'PhoneNumber' => $PhoneNumber,
             'EmailAddress' => $EmailAddress, 'UserKey' => $UserKey);
 
         array_push($resultArray['info'], $contactInfo);

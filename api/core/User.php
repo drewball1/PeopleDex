@@ -3,7 +3,6 @@
 TODO:
     -trim the login function to return only the needed information
     -make an endpoint for the login new function
-    -make add function
     -make edit function
     -make delete function
 
@@ -89,7 +88,7 @@ class User  {
         }
         else    {
             //if it failed we see the error
-            echo("Error: $statement->error");
+            echo("Register User Execution Error: $statement->error");
             return false;
         }
     }

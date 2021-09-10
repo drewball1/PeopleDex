@@ -10,16 +10,15 @@ TODO:
 class Contact   {
     //database table
     private $conn;
-    private $table = 'contacts';
+    private $table = 'Contacts';
 
     //contact table fields
     public $contactID;
     public $firstName;
     public $lastName;
-    public $address;
     public $phoneNumber;
     public $emailAddress;
-    public $userKey;
+    public $userKey; //userID
 
     //constructor with db connection;
     public function __construct($db)    {
@@ -33,7 +32,6 @@ class Contact   {
             ContactID,
             FirstName,
             LastName,
-            Address,
             PhoneNumber,
             EmailAddress,
             UserKey
@@ -50,8 +48,31 @@ class Contact   {
     }
 
     //need to get all info realated to a specific user key
-    public function readUserKey(){
+    public function searchByUserAndLetter($search){
+        //create query
+        $query = "SELECT
+            ID,
+            FirstName,
+            LastName,
+            PhoneNumber,
+            EmailAddress
+        FROM
+            $this->table
+        WHERE
+            UserID = :userID AND LastName LIKE \':letter%\'
+        ORDER BY
+            LastName
+        ASC";
 
+        $this->userKey = htmlspecialchars($this->userKey);
+        $search = htmlspecialchars($search);
+
+        $statement = $this->conn->prepare($query);
+        $statement->bindParam(':letter', $search);
+        $statement->bindParam(':userID', $this->userKey);
+        $statement->execute();
+
+        return $statement;
     }
 }
 
