@@ -86,8 +86,39 @@ class Contact   {
 
         return $statement;
     }
+
+    public function addContact()    {
+        //create query
+        $query = "INSERT INTO
+            $this->table
+        (FirstName, LastName, EmailAddress, PhoneNumber, UserID)
+        VALUES
+        (:firstName, :lastName, :emailAddress, :phoneNumber, :userID)";
+
+        $statement = $this->conn->prepare($query);
+
+        //sanitize
+        $this->firstName = htmlspecialchars($this->firstName);
+        $this->lastName = htmlspecialchars($this->lastName);
+        $this->emailAddress = htmlspecialchars($this->emailAddress);
+        $this->phoneNumber = htmlspecialchars($this->phoneNumber);
+        $this->userID = htmlspecialchars($this->userID);
+
+        //bind
+        $statement->bindParam(':firstName', $this->firstName);
+        $statement->bindParam(':lastName', $this->lastName);
+        $statement->bindParam(':emailAddress', $this->emailAddress);
+        $statement->bindParam(':phoneNumber', $this->phoneNumber);
+        $statement->bindParam(':userID', $this->userID);
+
+        if($statement->execute())   {
+            return true;
+        }
+        else    {
+            //if it failed we see the error
+            echo("Add Contact Execution Error: $statement->error");
+            return false;
+        }
+    }
 }
-
-
-
 ?>
