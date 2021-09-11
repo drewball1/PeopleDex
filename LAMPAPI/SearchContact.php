@@ -5,16 +5,16 @@
         $searchResults = "";
         $searchCount = 0;
 
-        $conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
+        $conn = new mysqli("localhost", "TheBeast", "professor0ak", "COP4331");
         if ($conn->connect_error)
         {
                 returnWithError( $conn->connect_error );
         }
         else
         {
-                $stmt = $conn->prepare("select Name from Colors where Name like ? and UserID=?");
-                $colorName = "%" . $inData["search"] . "%";
-                $stmt->bind_param("ss", $colorName, $inData["userId"]);
+                $stmt = $conn->prepare("select FirstName from Contacts where FirstName like ? and UserID=? or LastName like ? and UserID=?");
+                $contactName = "%" . $inData["search"] . "%";
+                $stmt->bind_param("ss", $contactName, $inData["userId"]);
                 $stmt->execute();
 
                 $result = $stmt->get_result();
