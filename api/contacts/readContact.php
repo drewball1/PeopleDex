@@ -28,9 +28,9 @@ if($numofResults > 0)   {
     while($rowInfo = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($rowInfo);
 
-        $contactInfo = array('ContactID' => $ContactID, 'FirstName' => $FirstName,
+        $contactInfo = array('ID' => $ID, 'FirstName' => $FirstName,
             'LastName' => $LastName, 'PhoneNumber' => $PhoneNumber,
-            'EmailAddress' => $EmailAddress, 'UserKey' => $UserKey);
+            'EmailAddress' => $EmailAddress, 'UserID' => $UserID);
 
         array_push($resultArray['info'], $contactInfo);
     }
@@ -41,6 +41,7 @@ else    {
 }
 
 //at the end we return the array as a JSON
+header('Content-type: application/json');
 echo json_encode($resultArray);
 
 ?>

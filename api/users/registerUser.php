@@ -1,5 +1,7 @@
 <?php
 
+header('Content-type: application/json');
+
 //initialize api and database connection
 require_once('../core/User.php');
 require_once('../config/Database.php');
@@ -17,11 +19,16 @@ $user->lastName = $userInput->lastName;
 $user->login = $userInput->login;
 $user->password = $userInput->password;
 
-if($user->registerUser())   {
-    echo json_encode(array('result' => 'Success', 'booleanResult' => true));
+if($result = $user->registerUser())   {
+    echo json_encode(array('result' => 'Success', 'Error' => 0, 'booleanResult' => true));
 }
 else    {
-    echo json_encode(array('result' => 'User not registered', 'booleanResult' => false));
+    if($result == 0){
+        echo json_encode(array('result' => 'User Not Registerd', 'Error' => 1, 'booleanResult' => false));
+    }
+    else    {
+        echo json_encode(array('result' => 'Login name already taken', 'Error' => 2,  'booleanResult' => false));
+    }
 }
 
 ?>

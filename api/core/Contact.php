@@ -5,6 +5,7 @@ TODO:
     -make add function
     -make edit function
     -make delete function
+    -Search 
 */
 
 class Contact   {
@@ -18,7 +19,7 @@ class Contact   {
     public $lastName;
     public $phoneNumber;
     public $emailAddress;
-    public $userKey; //userID
+    public $userID;
 
     //constructor with db connection;
     public function __construct($db)    {
@@ -29,12 +30,12 @@ class Contact   {
     public function read(){
         //create query
         $query = "SELECT
-            ContactID,
+            ID,
             FirstName,
             LastName,
             PhoneNumber,
             EmailAddress,
-            UserKey
+            UserID
         FROM
             $this->table
         ORDER BY
@@ -42,7 +43,10 @@ class Contact   {
         ASC";
 
         $statement = $this->conn->prepare($query);
-        $statement->execute();
+        if(!$statement->execute())
+        {
+            echo json_encode(array('error' => "statement execution failed"));
+        }
 
         return $statement;
     }
@@ -50,6 +54,11 @@ class Contact   {
     //need to get all info realated to a specific user key
     public function searchByUserAndLetter($search){
         //create query
+        $this->userKey = htmlspecialchars($this->userKey);
+        $search = htmlspecialchars($search);
+
+        $search = '\'' . $search . '%\'';
+
         $query = "SELECT
             ID,
             FirstName,
@@ -59,18 +68,21 @@ class Contact   {
         FROM
             $this->table
         WHERE
-            UserID = :userID AND LastName LIKE \':letter%\'
+            (UserID = $this->userKey AND LastName LIKE $search)
         ORDER BY
             LastName
         ASC";
 
-        $this->userKey = htmlspecialchars($this->userKey);
-        $search = htmlspecialchars($search);
+        //$this->userKey = htmlspecialchars($this->userKey);
+        //$search = htmlspecialchars($search);
 
         $statement = $this->conn->prepare($query);
-        $statement->bindParam(':letter', $search);
-        $statement->bindParam(':userID', $this->userKey);
-        $statement->execute();
+        //$search = '\'' . $search . '%\'';
+        //$statement->bindParam(':letter', $search);
+        //$statement->bindParam(':userID', $this->userKey);
+        if(!$statement->execute())  {
+            echo $statement->error;
+        }
 
         return $statement;
     }

@@ -1,5 +1,7 @@
 <?php
 
+header('Content-type: application/json');
+
 //initialize api and database connection
 require_once('../core/Contact.php');
 require_once('../config/Database.php');
