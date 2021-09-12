@@ -3,7 +3,6 @@
 TODO:
     -have a function that returns contacts based on a user key rather than every contact in the database
     -make edit function
-    -make delete function
     -Search 
 */
 
@@ -130,6 +129,36 @@ class Contact   {
         //bind
         $statement->bindParam(':contactID', $this->contactID);
 
+        if($statement->execute())   {
+            return true;
+        }
+        else    {
+            //if it failed we see the error
+            echo("Delete Contact Execution Error: $statement->error");
+            return false;
+        }
+    }
+
+    public function editContact()   {
+        $query = "UPDATE $this->table
+            SET FirstName = :firstName, LastName = :lastName, EmailAddress = :emailAddress, PhoneNumber = :phoneNumber
+            WHERE ID = :contactID";
+
+        $statement = $this->conn->prepare($query);
+
+        $this->contactID = htmlspecialchars($this->contactID);
+        $this->firstName = htmlspecialchars($this->firstName);
+        $this->lastName = htmlspecialchars($this->lastName);
+        $this->emailAddress = htmlspecialchars($this->emailAddress);
+        $this->phoneNumber = htmlspecialchars($this->phoneNumber);
+
+        //bind
+        $statement->bindParam(':contactID', $this->contactID);
+        $statement->bindParam(':firstName', $this->firstName);
+        $statement->bindParam(':lastName', $this->lastName);
+        $statement->bindParam(':emailAddress', $this->emailAddress);
+        $statement->bindParam(':phoneNumber', $this->phoneNumber);
+        
         if($statement->execute())   {
             return true;
         }
