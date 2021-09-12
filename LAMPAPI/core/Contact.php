@@ -178,7 +178,6 @@ class Contact   {
             $this->table
         WHERE
             (UserID = :userID AND FirstName LIKE :search) OR (UserID = :userID AND LastName LIKE :search)
-            OR (UserID = :userID AND PhoneNumber LIKE :search) OR (UserID = :userID AND EmailAddress LIKE :search)
         ORDER BY
             LastName
         ASC";
