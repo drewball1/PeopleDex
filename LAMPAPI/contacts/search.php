@@ -1,4 +1,5 @@
 <?php
+//headers
 header('Content-type: application/json');
 
 //initialize api and database connection
@@ -10,15 +11,18 @@ $db = $database->connect();
 
 $contact = new contact($db);
 
+//get user input
 $userInput = json_decode(file_get_contents('php://input'));
 
 $contact->userID = $userInput->userID;
 $search = $userInput->search;
 
+//run the search
 $result = $contact->search($search);
 
 $numofResults = $result->rowCount();
 
+//build json data
 $resultArray = array();
 $resultArray['meta'] = array('NumberOfResults' => $numofResults, 'Error' => '');
 
@@ -38,5 +42,6 @@ else    {
     $resultArray['meta']['Error'] = 'No records found';
 }
 
+//send json
 echo json_encode($resultArray);
 ?>

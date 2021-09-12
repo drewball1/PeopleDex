@@ -1,9 +1,4 @@
 <?php
-/*
-TODO:
-    -Search 
-*/
-
 class Contact   {
     //database table
     private $conn;
@@ -22,32 +17,7 @@ class Contact   {
         $this->conn = $db;
     }
 
-    //get contacts from db
-    public function read(){
-        //create query
-        $query = "SELECT
-            ID,
-            FirstName,
-            LastName,
-            PhoneNumber,
-            EmailAddress,
-            UserID
-        FROM
-            $this->table
-        ORDER BY
-            LastName
-        ASC";
-
-        $statement = $this->conn->prepare($query);
-        if(!$statement->execute())
-        {
-            echo json_encode(array('error' => "statement execution failed"));
-        }
-
-        return $statement;
-    }
-
-    //need to get all info realated to a specific user key
+    //returns contacts that last name start with a letter and are associated with 1 userid
     public function searchByUserAndLetter($search){
         //create query
         $query = "SELECT
@@ -64,13 +34,19 @@ class Contact   {
             LastName
         ASC";
 
+        //sanitize
         $this->userID = htmlspecialchars($this->userID);
         $search = htmlspecialchars($search);
 
         $statement = $this->conn->prepare($query);
+
+        //adds wildcard
         $search = $search . '%';
+        
+        //bind
         $statement->bindParam(':search', $search);
         $statement->bindParam(':userID', $this->userID);
+
         if(!$statement->execute())  {
             echo $statement->error;
         }
@@ -78,6 +54,7 @@ class Contact   {
         return $statement;
     }
 
+    //adds a contact to the contacts table
     public function addContact()    {
         //create query
         $query = "INSERT INTO
@@ -166,7 +143,8 @@ class Contact   {
             return false;
         }
     }
-
+    
+    //searches database for firstname or lastname containing a string
     public function search($search)    {
         $query = "SELECT
             ID,
@@ -186,8 +164,11 @@ class Contact   {
         $this->userID = htmlspecialchars($this->userID);
         $search = htmlspecialchars($search);
 
+        //adds wildcards
         $search = '%' . $search . '%';
         $statement = $this->conn->prepare($query);
+
+        //bind
         $statement->bindParam(':userID', $this->userID);
         $statement->bindParam(':search', $search);
 

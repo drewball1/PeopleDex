@@ -1,5 +1,4 @@
 <?php
-
 class User  {
     //set database
     private $conn;
@@ -14,13 +13,9 @@ class User  {
     public $login;      //whatever string the user chooses
     public $password;   //this will be a hash on our end
 
+    //overrides default constructor for one containing database
     public function __construct($db)    {
         $this->conn = $db;
-    }
-
-    //function that reads all data, will probably be used for testing but disabled later
-    public function read()  {
-
     }
 
     //get specific user based on login and password
@@ -41,6 +36,8 @@ class User  {
         $this->password = htmlspecialchars($this->password);
 
         $statement = $this->conn->prepare($query);
+
+        //bind
         $statement->bindParam(':login', $this->login);
         $statement->bindParam(':password', $this->password);
 
@@ -51,11 +48,10 @@ class User  {
             echo "Login execution failed Error: $statement->error";
             return false;
         }
-
-        return $statement;
     }
 
     //updates date on login
+    //used within the login function
     public function updateDate()    {
         $query = "UPDATE $this->table
         SET DateLastLoggedIn = CURRENT_TIMESTAMP
@@ -63,6 +59,7 @@ class User  {
 
         $statement = $this->conn->prepare($query);
 
+        //bind
         $statement->bindParam(':login', $this->login);
         $statement->bindParam(':password', $this->password);
 

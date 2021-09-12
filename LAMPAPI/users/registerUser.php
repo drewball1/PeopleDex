@@ -1,5 +1,5 @@
 <?php
-
+//headers
 header('Content-type: application/json');
 
 //initialize api and database connection
@@ -19,11 +19,13 @@ $user->lastName = $userInput->lastName;
 $user->login = $userInput->login;
 $user->password = $userInput->password;
 
+//return result
 if($result = $user->registerUser())   {
     echo json_encode(array('result' => 'Success', 'Error' => 0, 'booleanResult' => true));
 }
 else    {
     if($result == 0){
+        //catch all opteration failed
         echo json_encode(array('result' => 'User Not Registerd', 'Error' => 1, 'booleanResult' => false));
     }
     else    {

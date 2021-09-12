@@ -1,5 +1,5 @@
 <?php
-
+//headers
 header('Content-type: application/json');
 
 //initialize api and database connection
@@ -19,6 +19,7 @@ $user->password = $userInput->password;
 
 $result = $user->login();
 
+//make json data
 $resultArray = array();
 $resultArray['meta'] = array('Error'  => '');
 
@@ -39,11 +40,13 @@ if($result) {
         $user->updateDate();
     }
     else    {
-        $resultArray['meta']['Error'] = 'User not found found';
+        $resultArray['meta']['Error'] = 'User not found';
     }
 }
 else    {
-    $resultArray['meta']['Error'] = 'User not found found';
+    $resultArray['meta']['Error'] = 'User not found';
 }
+
+//return user info
 echo json_encode($resultArray);
 ?>
