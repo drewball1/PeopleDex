@@ -50,11 +50,6 @@ class Contact   {
     //need to get all info realated to a specific user key
     public function searchByUserAndLetter($search){
         //create query
-        $this->userKey = htmlspecialchars($this->userKey);
-        $search = htmlspecialchars($search);
-
-        $search = '\'' . $search . '%\'';
-
         $query = "SELECT
             ID,
             FirstName,
@@ -64,18 +59,18 @@ class Contact   {
         FROM
             $this->table
         WHERE
-            (UserID = $this->userKey AND LastName LIKE $search)
+            (UserID = :userID AND LastName LIKE :search)
         ORDER BY
             LastName
         ASC";
 
-        //$this->userKey = htmlspecialchars($this->userKey);
-        //$search = htmlspecialchars($search);
+        $this->userID = htmlspecialchars($this->userID);
+        $search = htmlspecialchars($search);
 
         $statement = $this->conn->prepare($query);
-        //$search = '\'' . $search . '%\'';
-        //$statement->bindParam(':letter', $search);
-        //$statement->bindParam(':userID', $this->userKey);
+        $search = $search . '%';
+        $statement->bindParam(':search', $search);
+        $statement->bindParam(':userID', $this->userID);
         if(!$statement->execute())  {
             echo $statement->error;
         }
@@ -170,6 +165,38 @@ class Contact   {
             echo("Delete Contact Execution Error: $statement->error");
             return false;
         }
+    }
+
+    public function search($search)    {
+        $query = "SELECT
+            ID,
+            FirstName,
+            LastName,
+            PhoneNumber,
+            EmailAddress
+        FROM
+            $this->table
+        WHERE
+            (UserID = :userID AND FirstName LIKE :search) OR (UserID = :userID AND LastName LIKE :search)
+            OR (UserID = :userID AND PhoneNumber LIKE :search) OR (UserID = :userID AND EmailAddress LIKE :search)
+        ORDER BY
+            LastName
+        ASC";
+
+        //sanitize
+        $this->userID = htmlspecialchars($this->userID);
+        $search = htmlspecialchars($search);
+
+        $search = '%' . $search . '%';
+        $statement = $this->conn->prepare($query);
+        $statement->bindParam(':userID', $this->userID);
+        $statement->bindParam(':search', $search);
+
+        if(!$statement->execute())   {
+            echo $statement->error;
+        }
+
+        return $statement;
     }
 }
 ?>

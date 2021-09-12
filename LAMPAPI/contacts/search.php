@@ -1,5 +1,4 @@
 <?php
-
 header('Content-type: application/json');
 
 //initialize api and database connection
@@ -16,7 +15,7 @@ $userInput = json_decode(file_get_contents('php://input'));
 $contact->userID = $userInput->userID;
 $search = $userInput->search;
 
-$result = $contact->searchByUserAndLetter($search);
+$result = $contact->search($search);
 
 $numofResults = $result->rowCount();
 
