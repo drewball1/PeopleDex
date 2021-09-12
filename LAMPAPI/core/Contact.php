@@ -1,7 +1,6 @@
 <?php
 /*
 TODO:
-    -have a function that returns contacts based on a user key rather than every contact in the database
     -Search 
 */
 
@@ -118,11 +117,13 @@ class Contact   {
         }
     }
 
+    //deletes a contact
     public function deleteContact() {
         $query = "DELETE FROM $this->table WHERE ID = :contactID";
 
         $statement = $this->conn->prepare($query);
 
+        //sanitize
         $this->contactID = htmlspecialchars($this->contactID);
 
         //bind
@@ -138,6 +139,8 @@ class Contact   {
         }
     }
 
+    //edit a contact
+    //must provide all fields even if they dont change
     public function editContact()   {
         $query = "UPDATE $this->table
             SET FirstName = :firstName, LastName = :lastName, EmailAddress = :emailAddress, PhoneNumber = :phoneNumber
@@ -145,6 +148,7 @@ class Contact   {
 
         $statement = $this->conn->prepare($query);
 
+        //sanitize
         $this->contactID = htmlspecialchars($this->contactID);
         $this->firstName = htmlspecialchars($this->firstName);
         $this->lastName = htmlspecialchars($this->lastName);

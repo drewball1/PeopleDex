@@ -1,9 +1,4 @@
 <?php
-/*
-TODO:
-    -trim the login function to return only the needed information
-    -make an endpoint for the login new function
-*/
 
 class User  {
     //set database
@@ -60,6 +55,7 @@ class User  {
         return $statement;
     }
 
+    //updates date on login
     public function updateDate()    {
         $query = "UPDATE $this->table
         SET DateLastLoggedIn = CURRENT_TIMESTAMP
@@ -73,6 +69,7 @@ class User  {
         $statement->execute();
     }
 
+    //adds user
     public function registerUser()  {
         $request = "INSERT INTO $this->table (FirstName, LastName, Login, Password)
          VALUES (:firstName, :lastName, :login, :password)";
