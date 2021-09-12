@@ -2,7 +2,6 @@
 /*
 TODO:
     -have a function that returns contacts based on a user key rather than every contact in the database
-    -make add function
     -make edit function
     -make delete function
     -Search 
@@ -117,6 +116,26 @@ class Contact   {
         else    {
             //if it failed we see the error
             echo("Add Contact Execution Error: $statement->error");
+            return false;
+        }
+    }
+
+    public function deleteContact() {
+        $query = "DELETE FROM $this->table WHERE ID = :contactID";
+
+        $statement = $this->conn->prepare($query);
+
+        $this->contactID = htmlspecialchars($this->contactID);
+
+        //bind
+        $statement->bindParam(':contactID', $this->contactID);
+
+        if($statement->execute())   {
+            return true;
+        }
+        else    {
+            //if it failed we see the error
+            echo("Delete Contact Execution Error: $statement->error");
             return false;
         }
     }
