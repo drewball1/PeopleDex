@@ -2,7 +2,6 @@
 /*
 TODO:
     -have a function that returns contacts based on a user key rather than every contact in the database
-    -make edit function
     -Search 
 */
 
@@ -158,7 +157,7 @@ class Contact   {
         $statement->bindParam(':lastName', $this->lastName);
         $statement->bindParam(':emailAddress', $this->emailAddress);
         $statement->bindParam(':phoneNumber', $this->phoneNumber);
-        
+
         if($statement->execute())   {
             return true;
         }

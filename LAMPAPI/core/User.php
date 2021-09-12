@@ -29,15 +29,13 @@ class User  {
     }
 
     //get specific user based on login and password
-    public function searchUserLogin()   {
+    public function login()   {
         $query = "SELECT
             ID,
             DateCreated,
             DateLastLoggedIn,
             FirstName,
-            LastName,
-            Login,
-            Password
+            LastName
         FROM
             $this->table
         WHERE
@@ -51,7 +49,28 @@ class User  {
         $statement->bindParam(':login', $this->login);
         $statement->bindParam(':password', $this->password);
 
+        if($statement->execute())   {
+            return $statement;
+        }
+        else    {
+            echo "Login execution failed Error: $statement->error";
+            return false;
+        }
+
         return $statement;
+    }
+
+    public function updateDate()    {
+        $query = "UPDATE $this->table
+        SET DateLastLoggedIn = CURRENT_TIMESTAMP
+        WHERE Login = :login AND Password = :password";
+
+        $statement = $this->conn->prepare($query);
+
+        $statement->bindParam(':login', $this->login);
+        $statement->bindParam(':password', $this->password);
+
+        $statement->execute();
     }
 
     public function registerUser()  {
