@@ -1,0 +1,180 @@
+
+@font-face{
+  font-family: "pokefont";
+  src: url(../pokefont.ttf);
+}
+
+input[type=submit]{
+	font-family: "pokefont";
+	font-size: 20px;
+}
+
+
+.loginresult{
+	font-family: "pokefont";
+	font-size: 20px;
+ color: red;
+}
+button{
+	font-family: "pokefont";
+	display:inline-block;
+}
+
+.top-screen-lights {
+  width: 50%;
+  margin-top: 2px;
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.light {
+  border: solid black 1px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-right: 7px;
+  background: red;
+}
+
+.line {
+  width: 18px;
+  height: 2px;
+  background-color: black;
+  margin-top: 8px;
+  display: block;
+}
+
+.submitbutton {
+	font-family: "pokefont";
+	font-size: 20px;
+	color: #356ABC;
+	background-color: #ffcd00;
+	border-radius: 40px;
+	border: 3px solid #356ABC;
+	display:inline-block;
+}
+
+.searchbutton {
+font-family: "pokefont";
+font-size: 15px;
+color: #356ABC;
+background-color: #ffcd00;
+border-radius: 40px;
+border: 3px solid #356ABC;
+}
+
+h1{
+font-family:"pokefont";
+}
+
+.boxed {
+  border: 5px solid #356ABC;
+  border-radius: 25px;
+  border-style: double;
+  background: #Eaeeef;
+  padding: 20px;
+  height: auto;
+  width: 70%;
+  margin: auto;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-family:"pokefont";
+}
+.boxedletter {
+  border: 5px solid #3a7bd4;
+  border-radius: 25px;
+  border-style: double;
+  background: #Eaeeef;
+  padding: 20px;
+  height: auto;
+  width: 70%;
+  margin: auto;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+  font-family:"pokefont";
+}
+ul{
+	list-style-type:none;
+	padding: 0;
+	margin: 0;
+	margin-left: 1em;
+}
+
+li.selected{
+background-image: url(../images/openpokeball.png);
+padding:10px;
+font-family: "pokefont";
+font-size: 20px;
+background-repeat: no-repeat;
+display: block;
+background-position: 0 .1em;
+padding-left: 1em;
+}
+
+li.unselected{
+background-image: url(../images/pokeball.png);
+padding:10px;
+font-family: "pokefont";
+font-size: 20px;
+background-repeat: no-repeat;
+background-position: 0 1.1em;
+display: block;
+padding-left: 1em;
+}
+
+div.boxed
+{
+    display: block;
+    text-align: center;
+    font-family:"pokefont";
+}
+div.boxedletter
+{
+    display: block;
+    text-align: center;
+    font-family:"pokefont";
+}
+
+div.resultsborder
+{
+	border: 5px solid black;
+	background: white;
+	padding: 20px;
+	height: 350px;
+	width: 350px;
+	margin: auto;
+	display:inline-block;
+	border-radius: 0 0 0 17%;
+}
+
+div.results
+{
+	border: 5px solid black;
+	border-radius: 5px;
+	background: #98cb98;
+	padding: 20px;
+	height: 250px;
+	width: 250px;
+	margin: auto;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	font-family:"pokefont";
+	font-size: 30px;
+	color: black;
+}
+
+
+body {
+background-image: url('../images/pokewallpaper.png');
+background-repeat: no-repeat;
+background-size: cover;
+background-color: #cccccc;
+}
