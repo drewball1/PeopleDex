@@ -120,7 +120,7 @@ li.selected {
 	font-size: 20px;
 	background-repeat: no-repeat;
 	display: block;
-	background-position: 0 .1em;
+	background-position: -4px 7px;
 	padding-left: 1em;
 }
 
@@ -130,7 +130,7 @@ li.unselected {
 	font-family: "pokefont";
 	font-size: 20px;
 	background-repeat: no-repeat;
-	background-position: 0 1.1em;
+	background-position: 0 15px;
 	display: block;
 	padding-left: 1em;
 }
