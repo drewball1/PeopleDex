@@ -269,51 +269,50 @@ function searchBox()
 }
 
 function register(){
-  var newFName = document.getElementById("firstName");
+	var newFName = document.getElementById("firstName");
 	if(newFName.value.length == 0){
-	  document.getElementById("registerError").innerHTML = "Please enter your first name";
-	  return;
+		document.getElementById("registerError").innerHTML = "Please enter your first name";
+		return;
 	}
-  var newLname = document.getElementById("lastName");
-  if(newLName.value.length == 0){
-	  document.getElementById("registerError").innerHTML = "Please enter your last name";
-	  return;
+	var newLname = document.getElementById("lastName");
+	if(newLName.value.length == 0){
+		document.getElementById("registerError").innerHTML = "Please enter your last name";
+		return;
 	}
-  var newUser = document.getElementById("loginName");
-  if(newUser.value.length == 0){
-	  document.getElementById("registerError").innerHTML = "Please enter a Username";
-	  return;
+	var newUser = document.getElementById("loginName");
+	if(newUser.value.length == 0){
+		document.getElementById("registerError").innerHTML = "Please enter a Username";
+		return;
 	}
-  var newPass = document.getElementById("loginPassword");
+	var newPass = document.getElementById("loginPassword");
 	if(newPass.value.length == 0){
-	  document.getElementById("registerError").innerHTML = "Please enter a Password";
-	  return;
+		document.getElementById("registerError").innerHTML = "Please enter a Password";
+		return;
 	}
 	
 	var hash = md5( newPass );
 	var tmp = {firstName: newFName, lastName: newLName, login:newUser,password:hash};
-	  var jsonPayload = JSON.stringify( tmp );
+	var jsonPayload = JSON.stringify( tmp );
 	
 	var url = urlBase + '/Register.' + extension;
 	
 	var xhr = new XMLHttpRequest();
-	  xhr.open("POST", url, true);
-  	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-   
-   try
-	  {
-		  xhr.onreadystatechange = function()
-	  	{
-		  	if (this.readyState == 4 && this.status == 200)
-			  {
-		   getElementById("registrationBox").display = "none";
-		   getElementById("boxBanner").innerHTML = "Registration Successful!";
-		   setTimeout(goToIndex(), 3000);
-  
-		}
-	  };
-	xhr.send(jsonPayload);
-	  }
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+	try
+	{
+		xhr.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				getElementById("registrationBox").display = "none";
+				getElementById("boxBanner").innerHTML = "Registration Successful!";
+				setTimeout(goToIndex(), 3000);
+			}
+		};
+		xhr.send(jsonPayload);
+	}
 	catch(err)
 	{
 		document.getElementById("registerError").innerHTML = err.message;
@@ -322,5 +321,5 @@ function register(){
 
 
 function goToIndex(){
-  window.location.href = "index.html";
+	window.location.href = "index.html";
 }

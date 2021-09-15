@@ -1,25 +1,67 @@
+<!DOCTYPE html>
 <html>
 <head>
+	<script type="text/javascript" src="/js/code.js"></script>
+    <link href="css/styles.css" rel="stylesheet">	
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	
+	<script type="text/javascript">
+//	document.addEventListener('DOMContentLoaded', function() 
+//	{
+//		readCookie();
+//	}, false);
+	</script>
+</head>
 <style>
 @font-face{
   font-family: "pokefont";
   src: url(pokefont.ttf);
 }
+
 input[type=submit]{
-font-family: "pokefont";
-font-size: 20px;
+	font-family: "pokefont";
+	font-size: 20px;
 }
+
 button{
-font-family: "pokefont";
+	font-family: "pokefont";
+	display:inline-block;
+}
+
+.top-screen-lights {
+  width: 50%;
+  margin-top: 2px;
+  display: flex;
+  justify-self: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.light {
+  border: solid black 1px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  margin-right: 7px;
+  background: red;
+}
+
+.line {
+  width: 18px;
+  height: 2px;
+  background-color: black;
+  margin-top: 8px;
+  display: block;
 }
 
 .submitbutton {
-font-family: "pokefont";
-font-size: 20px;
-color: #356ABC;
-background-color: #ffcd00;
-border-radius: 40px;
-border: 3px solid #356ABC;
+	font-family: "pokefont";
+	font-size: 20px;
+	color: #356ABC;
+	background-color: #ffcd00;
+	border-radius: 40px;
+	border: 3px solid #356ABC;
+	display:inline-block;
 }
 
 .searchbutton {
@@ -65,6 +107,34 @@ font-family:"pokefont";
   text-align: left;
   font-family:"pokefont";
 }
+ul{
+	list-style-type:none;
+	padding: 0;
+	margin: 0;
+	margin-left: 1em;
+}
+
+li.selected{
+background-image: url(images/openpokeball.png);
+padding:10px;
+font-family: "pokefont";
+font-size: 20px;
+background-repeat: no-repeat;
+display: block;
+background-position: 0 .1em;
+padding-left: 1em;
+}
+
+li.unselected{
+background-image: url(images/pokeball.png);
+padding:10px;
+font-family: "pokefont";
+font-size: 20px;
+background-repeat: no-repeat;
+background-position: 0 1.1em;
+display: block;
+padding-left: 1em;
+}
 
 div.boxed
 {
@@ -79,6 +149,35 @@ div.boxedletter
     font-family:"pokefont";
 }
 
+div.resultsborder
+{
+	border: 5px solid black;
+	background: white;
+	padding: 20px;
+	height: 350px;
+	width: 350px;
+	margin: auto;
+	display:inline-block;
+	border-radius: 0 0 0 17%;
+}
+
+div.results
+{
+	border: 5px solid black;
+	border-radius: 5px;
+	background: #98cb98;
+	padding: 20px;
+	height: 250px;
+	width: 250px;
+	margin: auto;
+	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: left;
+	font-family:"pokefont";
+	font-size: 30px;
+	color: black;
+}
 
 
 body {
@@ -89,83 +188,104 @@ background-color: #cccccc;
 }
 </style>
 </head>
-
-  <body background= href="https://pixelz.cc/images/pokemon-poke-ball-wqhd-1440p-wallpaper/">
-    <p align="center"><a 
-    href="index.html"><img 
-src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png" alt="pokemon-font" border="0"></a>
-<div class="boxed">
+    <p align="center"><a onclick="location.reload()"><img src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"  alt="pokemon-font" border="0"></a></p>
+<div class="boxed" id="whatBox">
 	
 	<h1 id="header" style="font-size:40px;font-family:'pokefont';">What would you like to do?</h1>
+	<h1 id="success" style="font-size:30px;font-family:'pokefont';"></h2>
 	<div id="createForm" style="display:none">
 		<label for='contactFirstName'>First Name:</label></br>
     	 	<input type='text' id='contactFirstName' name='fname' required></br>
 		<label for='contactLastName'>Last Name:</label></br>
     		<input type='text' id='contactLastName' name='lname' required></br>
 		<label for='contactEmail'>Email:</label></br>
-    		<input type='text' id='contactEmail' name='email' required></br>
+    		<input type='email' id='contactEmail' name='email' required></br>
 		<label for='contactPhone'>Phone Number:</label></br>
-    		<input type='text' id='phoneNumber' name='phone' required></br></br>
+    		<input type='tel' id='phoneNumber' name='phone' required></br></br>
 		<button type="button" class="submitbutton" onclick="createContact();">Catch Person!</button>
 		<button type="button" class="submitbutton" onclick="cancelCreate();">Cancel</button>
 
+		<p id="createError" style="color:red; font-size:40;"></p>
+
 	</div>
 	<button type="button" id=createButton class= submitbutton onclick="createContactField();">Create Contact</button>
-	<script>
-	function createContactField(){
-		document.getElementById("createForm").style.display = 'block';
-		document.getElementById("searchBox").style.visibility = 'hidden';
-		document.getElementById("createButton").style.visibility = 'hidden';
-		document.getElementById("letterSearch").style.visibility = 'hidden';
-		document.getElementById("header").innerHTML = "Enter Contact Information:";
-	}
-
-	function cancelCreate(){
-		document.getElementById("createForm").style.display = 'none';
-		document.getElementById("contactFirstName").value = '';
-		document.getElementById("contactLastName").value = '';
-		document.getElementById("contactEmail").value = '';
-		document.getElementById("phoneNumber").value = '';
-		document.getElementById("searchBox").style.visibility = 'visible';
-		document.getElementById("createButton").style.visibility = 'visible';
-		document.getElementById("letterSearch").style.visibility = 'visible';
-		document.getElementById("header").innerHTML = "What would you like to do?";
-	}
-	</script>
     </br></br>
 	<form id="searchBox"> 
-		<input type="search" id="query" name="query" placeholder="Search...">
+		<input type="search" id="searchText" name="query" placeholder="Search...">
 		<button type = "button" class="searchbutton" onclick="searchContacts()">Search Box</button>
 	</form>
 </div>
 <div class="boxedletter" id="letterSearch">
-<button type="button" onclick="searchLtr(a)">A</button>
-<button type="button" onclick="searchLtr(b)">B</button>
-<button type="button" onclick="searchLtr(c)">C</button>
-<button type="button" onclick="searchLtr(d)">D</button>
-<button type="button" onclick="searchLtr(e)">E</button>
-<button type="button" onclick="searchLtr(f)">F</button>
-<button type="button" onclick="searchLtr(g)">G</button>
-<button type="button" onclick="searchLtr(h)">H</button>
-<button type="button" onclick="searchLtr(i)">I</button>
-<button type="button" onclick="searchLtr(j)">J</button>
-<button type="button" onclick="searchLtr(k)">K</button>
-<button type="button" onclick="searchLtr(l)">L</button>
-<button type="button" onclick="searchLtr(m)">M</button>
-<button type="button" onclick="searchLtr(n)">N</button>
-<button type="button" onclick="searchLtr(o)">O</button>
-<button type="button" onclick="searchLtr(p)">P</button>
-<button type="button" onclick="searchLtr(q)">Q</button>
-<button type="button" onclick="searchLtr(r)">R</button>
-<button type="button" onclick="searchLtr(s)">S</button>
-<button type="button" onclick="searchLtr(t)">T</button>
-<button type="button" onclick="searchLtr(u)">U</button>
-<button type="button" onclick="searchLtr(v)">V</button>
-<button type="button" onclick="searchLtr(w)">W</button>
-<button type="button" onclick="searchLtr(x)">X</button>
-<button type="button" onclick="searchLtr(y)">Y</button>
-<button type="button" onclick="searchLtr(z)">Z</button>
+<button type="button" class="searchbutton" onclick="searchLtr('a')">A</button>
+<button type="button" class="searchbutton" onclick="searchLtr('b')">B</button>
+<button type="button" class="searchbutton" onclick="searchLtr('c')">C</button>
+<button type="button" class="searchbutton" onclick="searchLtr('d')">D</button>
+<button type="button" class="searchbutton" onclick="searchLtr('e')">E</button>
+<button type="button" class="searchbutton" onclick="searchLtr('f')">F</button>
+<button type="button" class="searchbutton" onclick="searchLtr('g')">G</button>
+<button type="button" class="searchbutton" onclick="searchLtr('h')">H</button>
+<button type="button" class="searchbutton" onclick="searchLtr('i')">I</button>
+<button type="button" class="searchbutton" onclick="searchLtr('j')">J</button>
+<button type="button" class="searchbutton" onclick="searchLtr('k')">K</button>
+<button type="button" class="searchbutton" onclick="searchLtr('l')">L</button>
+<button type="button" class="searchbutton" onclick="searchLtr('m')">M</button>
+<button type="button" class="searchbutton" onclick="searchLtr('n')">N</button>
+<button type="button" class="searchbutton" onclick="searchLtr('o')">O</button>
+<button type="button" class="searchbutton" onclick="searchLtr('p')">P</button>
+<button type="button" class="searchbutton" onclick="searchLtr('q')">Q</button>
+<button type="button" class="searchbutton" onclick="searchLtr('r')">R</button>
+<button type="button" class="searchbutton" onclick="searchLtr('s')">S</button>
+<button type="button" class="searchbutton" onclick="searchLtr('t')">T</button>
+<button type="button" class="searchbutton" onclick="searchLtr('u')">U</button>
+<button type="button" class="searchbutton" onclick="searchLtr('v')">V</button>
+<button type="button" class="searchbutton" onclick="searchLtr('w')">W</button>
+<button type="button" class="searchbutton" onclick="searchLtr('x')">X</button>
+<button type="button" class="searchbutton" onclick="searchLtr('y')">Y</button>
+<button type="button" class="searchbutton" onclick="searchLtr('z')">Z</button>
 </div>
 
+<div class="boxed">
+	<div style="margin:auto">
+	<div class="resultsborder">
+		<div class="top-screen-lights">
+              		<div class="light red"></div>
+              		<div class="light red"></div>
+			<div class="light red"></div>
+            	</div>
+		<div class="results"> 
+			First Name:<br>
+			<a id="screenfName" style="font-size:25px;font-family:'pokefont';">John</a><br>
+			Last Name:<br>
+			<a id="screenlName" style="font-size:25px;font-family:'pokefont';">Doe</a><br>
+			Email:<br>
+			<a id="screenemail" style="font-size:25px;font-family:'pokefont';">Example@fun.com</a><br>
+			Phone:
+			<a id=screenphone style="font-size:25px;font-family:'pokefont';">555-5555</a><br>
+		</div>
+		<div>
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+		<div class="line"></div>
+		</div>
+	</div>
+	<br><br><br><br>
+	<button type="button" class=submitbutton id="edit" onclick="editInfo();">Edit Info</button>
+	<button type="button" class=submitbutton id="delete" onclick="deleteContact();">Release</button><br><br>
+	<button type="button" class=submitbutton id="goBack" onclick="cancelCreate();">Go Back</button><br>
+	</div>
+</div>
+
+
+<div class="boxed" id="contactSearchResults" style="text-align: left;">
+	<p id="searchResultBanner" style="font-size:40px;"></p>
+	<ul id="resultsList">
+		<li class="unselected" id="1" onclick="select(this.id);">Fake Contact</li>
+		<li class="unselected" id="2" onclick="select(this.id);">Fake Contact</li>
+		<li class="unselected" id="3" onclick="select(this.id);">Fake Contact</li>
+		<li class="unselected" id="4" onclick="select(this.id);">Fake Contact</li>
+		<li class="unselected" id="5" onclick="select(this.id);">Fake Contact</li>
+	</ul>
+</div>
   </body>
 </html>
