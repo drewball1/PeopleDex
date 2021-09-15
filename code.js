@@ -351,7 +351,7 @@ function searchLtr(ltr) {
 
 					for (var i = 0; i < jsonObject.results.length; i++) {
 						contactList += "<li class='unselected' id='";
-						contactList += jsonObject.getInt("contactID"); //get id specifically
+						contactList += jsonObject.getInt("ID"); //get id specifically
 						contactList += " onclick='select(this.id);'>";
 						contactList += jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"); //get first name and last name specifically
 						contactList += "</li>";
@@ -463,7 +463,7 @@ function reloadSearch() {
 
 						for (var i = 0; i < jsonObject.results.length; i++) {
 							contactList += "<li class='unselected' id='";
-							contactList += jsonObject.getInt("contactID"); //get id specifically
+							contactList += jsonObject.getInt("ID"); //get id specifically
 							contactList += " onclick='select(this.id);'>";
 							contactList += jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"); //get first name and last name specifically
 							contactList += "</li>";
