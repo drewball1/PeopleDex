@@ -1,6 +1,6 @@
 @font-face {
 	font-family: "pokefont";
-	src: url(pokefont.ttf);
+	src: url(../pokefont.ttf);
 }
 
 input[type=submit] {
@@ -114,7 +114,7 @@ ul {
 }
 
 li.selected {
-	background-image: url(images/openpokeball.png);
+	background-image: url(../images/openpokeball.png);
 	padding:10px;
 	font-family: "pokefont";
 	font-size: 20px;
@@ -125,7 +125,7 @@ li.selected {
 }
 
 li.unselected {
-	background-image: url(images/pokeball.png);
+	background-image: url(../images/pokeball.png);
 	padding:10px;
 	font-family: "pokefont";
 	font-size: 20px;
