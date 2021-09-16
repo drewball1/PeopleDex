@@ -256,6 +256,7 @@ function select(id) {
 	if (original != undefined) {
 		original.className = "unselected";
 	}
+	document.getElementById(id).className = "selected";
 
 	selectedID = id;
 	populateWithSelected();
