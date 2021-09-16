@@ -556,6 +556,7 @@ const viewer = {
 		}
 		document.getElementById("screen-container").setAttribute("state", "createmode");
 		state = createmode;
+		document.getElementById("contactFirstName").focus();
 	},
 	setEdit: function() {
 		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
@@ -564,6 +565,7 @@ const viewer = {
 		}
 		document.getElementById("screen-container").setAttribute("state", "editmode");
 		state = editmode;
+		document.getElementById("contactFirstName").focus();
 	}
 }
 
