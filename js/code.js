@@ -5,6 +5,8 @@ var userId = 0;
 var firstName = "";
 var lastName = "";
 
+var searchResults = [];
+var selectedID = -1;
 
 var lastSearch = "";
 var lastType = "";
@@ -33,7 +35,6 @@ function doLogin() {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				var jsonObject = JSON.parse(xhr.responseText);
-				console.log(jsonObject);
 				if (jsonObject["info"]) {
 					userId = jsonObject.info[0].ID;
 				}
@@ -60,7 +61,7 @@ function doLogin() {
 }
 
 function saveCookie() {
-	var minutes = 20;
+	var minutes = 120;
 	var date = new Date();
 	date.setTime(date.getTime() + (minutes * 60 * 1000));
 	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
@@ -138,7 +139,17 @@ function createContact() {
 	var email = document.getElementById("contactEmail").value;
 	var phone = document.getElementById("phoneNumber").value;
 
-	var tmp = { firstName: fname, lastName: lname, email: email, phone: phone };
+	readCookie();
+
+	var tmp = { 
+		ID: 0,
+		userID: userId,
+		firstName: fname,
+		lastName: lname,
+		phoneNumber: phone,
+		emailAddress: email
+	};
+
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/contacts/addContact.' + extension;
@@ -150,14 +161,17 @@ function createContact() {
 	try {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				cancelCreate();
-				document.getElementById("searchBox").style.visibility = 'hidden';
-				document.getElementById("createButton").style.visibility = 'hidden';
-				document.getElementById("letterSearch").style.visibility = 'hidden';
-				document.getElementById("header").style.display = 'none';
+				// cancelCreate();
+				// document.getElementById("searchBox").style.visibility = 'hidden';
+				// document.getElementById("createButton").style.visibility = 'hidden';
+				// document.getElementById("letterSearch").style.visibility = 'hidden';
+				// document.getElementById("header").style.display = 'none';
 				document.getElementById("success").innerHTML = 'Alright! ' + fname + ' ' + lname + ' was caught! New PeopleDex data will be added for ' + fname + ' ' + lname + '!';
 				setTimeout(cancelCreate, 3000);
 
+				viewer.setViewing();
+				reloadSearch();
+				populateWithSelected();
 			}
 		};
 		xhr.send(jsonPayload);
@@ -167,7 +181,6 @@ function createContact() {
 	}
 }
 
-// stub
 function done() {
 	if (viewer.state == viewer.editmode) {
 		submitEdit();
@@ -175,9 +188,6 @@ function done() {
 	else {
 		createContact();
 	}
-	viewer.setViewing() // not quite like this
-	// reloadSearch();
-	populateWithSelected
 }
 
 function cancel() {
@@ -186,7 +196,12 @@ function cancel() {
 }
 
 // called after add or edit, following the refreshResults(). If the previously selected contact isn't in the list anymore
-function populateWithSelected() {}
+function populateWithSelected() {
+	document.getElementById("contactFirstName").value = document.getElementById(selectedID).getAttribute("firstname");
+	document.getElementById("contactLastName").value = document.getElementById(selectedID).getAttribute("lastname");
+	document.getElementById("contactEmail").value = document.getElementById(selectedID).getAttribute("email");
+	document.getElementById("phoneNumber").value = document.getElementById(selectedID).getAttribute("phone");
+}
 
 function deleteContact() {
 	var del = confirm("Once released, fname is gone forever. Ok?");
@@ -235,16 +250,15 @@ function select(id) {
 	if (viewer.state == viewer.editmode || viewer.state == viewer.createmode) {
 		return;
 	}
-	var text1 = "Fake Contact"
-	var text2 = "Selected Fake Contact"
 	var original;
 
 	var original = document.getElementsByClassName("selected")[0];
 	if (original != undefined) {
 		original.className = "unselected";
 	}
-	document.getElementById(id).className = "selected";
 
+	selectedID = id;
+	populateWithSelected();
 	viewer.setViewing();
 }
 
@@ -257,7 +271,8 @@ function searchContacts() {
 
 	var contactList = "";
 
-	var tmp = { search: srch, userId: userId };
+	readCookie();
+	var tmp = { search: srch, userID: userId };
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/contacts/search.' + extension;
@@ -277,11 +292,16 @@ function searchContacts() {
 				else {
 					document.getElementById("searchResultBanner").innerHTML = "Search Results:";
 
-					for (var i = 0; i < jsonObject.length; i++) {
+					for (var i = 0; i < jsonObject.info.length; i++) {
+						var info = jsonObject.info[i];
 						contactList += "<li class='unselected' id='";
-						contactList += jsonObject.getInt("contactID"); //get id specifically
-						contactList += "' onclick='select(this.id);'>";
-						contactList += jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"); //get first name and last name specifically
+						contactList += info.ID; //get id specifically
+						contactList += "' onclick='select(this.id);'";
+						contactList += " firstname='" + info.FirstName;
+						contactList += "' lastname='" + info.LastName;
+						contactList += "' email='" + info.EmailAddress;
+						contactList += "' phone='" + info.PhoneNumber + "'>";
+						contactList += info.FirstName + " " + info.LastName; //get first name and last name specifically
 						contactList += "</li>";
 					}
 
