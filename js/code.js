@@ -218,11 +218,12 @@ function select(id) {
 
 }
 
-function searchBox() {
+function searchContacts() {
 	var srch = document.getElementById("searchText").value;
 	lastSearch = srch;
 	lastType = "search";
-	document.getElementById("contactSearchResult").innerHTML = "";
+	document.getElementById("resultsList").innerHTML = "";
+	document.getElementById("searchResultBanner").innerHTML = ""
 
 	var contactList = "";
 
@@ -237,16 +238,16 @@ function searchBox() {
 	try {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById("resultsList").innerHTML = ""
+				
 				var jsonObject = JSON.parse(xhr.responseText);
-				if (jsonObject.results.length == 0) {
+				if (jsonObject.meta.NumberOfResults == 0) {
 					document.getElementById("searchResultBanner").innerHTML = "No Results Found";
 				}
 
 				else {
 					document.getElementById("searchResultBanner").innerHTML = "Search Results:";
 
-					for (var i = 0; i < jsonObject.results.length; i++) {
+					for (var i = 0; i < jsonObject.length; i++) {
 						contactList += "<li class='unselected' id='";
 						contactList += jsonObject.getInt("contactID"); //get id specifically
 						contactList += " onclick='select(this.id);'>";
@@ -254,7 +255,7 @@ function searchBox() {
 						contactList += "</li>";
 					}
 
-					document.getElementById("contactSearchResult").innerHTML = contactList;
+					document.getElementById("resultsList").innerHTML = contactList;
 				}
 			}
 		};
@@ -311,16 +312,16 @@ function register() {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				var jsonObject = JSON.parse(xhr.responseText);
-				if(jsonObject.Error == 0){
+				if(jsonObject.Error === 0){
 					document.getElementById("registrationBox").display = "none";
 					document.getElementById("boxBanner").innerHTML = "Registration Successful!";
 					setTimeout(goToIndex, 2000);
 				}
-				if(jsonObject.Error == 1){
+				if(jsonObject.Error === 1){
 					document.getElementById("registerError").innerHTML = "User not registered";
 					setTimeout(goToIndex, 2000);
 				}
-				if(jsonObject.Error == 2){
+				if(jsonObject.Error === 2){
 					document.getElementById("registerError").innerHTML = "Username already taken";
 					document.getElementById("login").reset() = "";
 					document.getElementById("password").reset() = "";
@@ -348,7 +349,7 @@ function searchLtr(ltr) {
 	lastType = "ltr";
 	lastSearch = ltr;
 	document.getElementById("searchText").innerHTML = "";
-	document.getElementById("contactSearchResult").innerHTML = "";
+	document.getElementById("resultsList").innerHTML = "";
 
 	var contactList = "";
 
@@ -372,7 +373,7 @@ function searchLtr(ltr) {
 				else {
 					document.getElementById("searchResultBanner").innerHTML = "Search Results:";
 
-					for (var i = 0; i < jsonObject.results.length; i++) {
+					for (var i = 0; i < jsonObject.length; i++) {
 						contactList += "<li class='unselected' id='";
 						contactList += jsonObject.getInt("ID"); //get id specifically
 						contactList += " onclick='select(this.id);'>";
