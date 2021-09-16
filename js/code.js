@@ -20,8 +20,8 @@ function doLogin() {
 
 	document.getElementById("loginResult").innerHTML = "";
 
-	//var tmp = {login:login,password:password};
-	var tmp = { login: login, password: hash };
+	var tmp = {login:login,password:password};
+	// var tmp = { login: login, password: hash };
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/users/login.' + extension;
@@ -33,15 +33,18 @@ function doLogin() {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				var jsonObject = JSON.parse(xhr.responseText);
-				userId = jsonObject.id;
+				console.log(jsonObject);
+				if (jsonObject["info"]) {
+					userId = jsonObject.info[0].ID;
+				}
 
 				if (userId < 1) {
 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 					return;
 				}
 
-				firstName = jsonObject.firstName;
-				lastName = jsonObject.lastName;
+				firstName = jsonObject.info[0].FirstName;
+				lastName = jsonObject.info[0].LastName;
 
 				saveCookie();
 
@@ -120,6 +123,11 @@ function cancelCreate() {
 	document.getElementById("header").style.display = 'inline';
 }
 
+function beginCreateContact() {
+	viewer.clearForm();
+	viewer.setCreate();
+}
+
 function createContact() {
 	var fname = document.getElementById("contactFirstName").value;
 	if (document.getElementById("contactFirstName").value.length == 0) {
@@ -130,7 +138,7 @@ function createContact() {
 	var email = document.getElementById("contactEmail").value;
 	var phone = document.getElementById("phoneNumber").value;
 
-	var tmp = { firstName: fname, lastName: lname, email: email, phone: phoneNumber };
+	var tmp = { firstName: fname, lastName: lname, email: email, phone: phone };
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/contacts/addContact.' + extension;
@@ -165,9 +173,10 @@ function done() {
 		submitEdit();
 	}
 	else {
-		//createContact();
+		createContact();
 	}
 	viewer.setViewing() // not quite like this
+	// reloadSearch();
 	populateWithSelected
 }
 
@@ -415,8 +424,8 @@ function searchLtr(ltr) {
 }
 
 function editContact() {
-	//change form to be active
-	//
+	viewer.setEdit();
+
 	var tmp = { ID: getElementsByClassName("selected")[0].id };
 	var jsonPayload = JSON.stringify(tmp);
 
@@ -532,14 +541,19 @@ const viewer = {
 	editmode: 2,
 	createmode: 3,
 	state: 0,
+	clearForm: function() {
+		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
+		for (let i = 0; i < 4; i++) {
+			document.getElementById(ids[i]).value = "";
+		}
+	},
 	setEmpty: function() {
 		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
 		for (let i = 0; i < 4; i++) {
 			document.getElementById(ids[i]).setAttribute("readonly","");
-			// document.getElementById(ids[i]).value = "";
 		}
 		document.getElementById("screen-container").setAttribute("state", "emptymode");
-		state = emptymode;
+		this.state = this.emptymode;
 	},
 	setViewing: function() {
 		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
@@ -547,7 +561,7 @@ const viewer = {
 			document.getElementById(ids[i]).setAttribute("readonly","");
 		}
 		document.getElementById("screen-container").setAttribute("state", "viewingmode");
-		state = viewingmode;
+		this.state = this.viewingmode;
 	},
 	setCreate: function() {
 		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
@@ -555,7 +569,7 @@ const viewer = {
 			document.getElementById(ids[i]).removeAttribute("readonly");
 		}
 		document.getElementById("screen-container").setAttribute("state", "createmode");
-		state = createmode;
+		this.state = this.createmode;
 		document.getElementById("contactFirstName").focus();
 	},
 	setEdit: function() {
@@ -564,7 +578,7 @@ const viewer = {
 			document.getElementById(ids[i]).removeAttribute("readonly");
 		}
 		document.getElementById("screen-container").setAttribute("state", "editmode");
-		state = editmode;
+		this.state = this.editmode;
 		document.getElementById("contactFirstName").focus();
 	}
 }
