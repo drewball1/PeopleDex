@@ -157,7 +157,7 @@ class Contact   {
         WHERE
             (UserID = :userID AND FirstName LIKE :search) OR (UserID = :userID AND LastName LIKE :search)
         ORDER BY
-            LastName
+            FirstName
         ASC";
 
         //sanitize
