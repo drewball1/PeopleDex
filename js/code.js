@@ -159,8 +159,25 @@ function createContact() {
 	}
 }
 
+// stub
+function done() {
+	if (viewer.state == viewer.editmode) {
+		submitEdit();
+	}
+	else {
+		//createContact();
+	}
+	viewer.setViewing() // not quite like this
+	populateWithSelected
+}
 
+function cancel() {
+	viewer.setViewing();
+	populateWithSelected();
+}
 
+// called after add or edit, following the refreshResults(). If the previously selected contact isn't in the list anymore
+function populateWithSelected() {}
 
 function deleteContact() {
 	var del = confirm("Once released, fname is gone forever. Ok?");
@@ -206,6 +223,9 @@ function deleteContact() {
 }
 
 function select(id) {
+	if (viewer.state == viewer.editmode || viewer.state == viewer.createmode) {
+		return;
+	}
 	var text1 = "Fake Contact"
 	var text2 = "Selected Fake Contact"
 	var original;
@@ -216,6 +236,7 @@ function select(id) {
 	}
 	document.getElementById(id).className = "selected";
 
+	viewer.setViewing();
 }
 
 function searchContacts() {
@@ -250,7 +271,7 @@ function searchContacts() {
 					for (var i = 0; i < jsonObject.length; i++) {
 						contactList += "<li class='unselected' id='";
 						contactList += jsonObject.getInt("contactID"); //get id specifically
-						contactList += " onclick='select(this.id);'>";
+						contactList += "' onclick='select(this.id);'>";
 						contactList += jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"); //get first name and last name specifically
 						contactList += "</li>";
 					}
@@ -503,8 +524,46 @@ function reloadSearch() {
 			document.getElementById("searchResultBanner").innerHTML = err.message;
 		}
 	}
-
 }
 
-
+const viewer = {
+	emptymode: 0,
+	viewingmode: 1,
+	editmode: 2,
+	createmode: 3,
+	state: 0,
+	setEmpty: function() {
+		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
+		for (let i = 0; i < 4; i++) {
+			document.getElementById(ids[i]).setAttribute("readonly","");
+			// document.getElementById(ids[i]).value = "";
+		}
+		document.getElementById("screen-container").setAttribute("state", "emptymode");
+		state = emptymode;
+	},
+	setViewing: function() {
+		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
+		for (let i = 0; i < 4; i++) {
+			document.getElementById(ids[i]).setAttribute("readonly","");
+		}
+		document.getElementById("screen-container").setAttribute("state", "viewingmode");
+		state = viewingmode;
+	},
+	setCreate: function() {
+		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
+		for (let i = 0; i < 4; i++) {
+			document.getElementById(ids[i]).removeAttribute("readonly");
+		}
+		document.getElementById("screen-container").setAttribute("state", "createmode");
+		state = createmode;
+	},
+	setEdit: function() {
+		var ids = ["contactFirstName", "contactLastName", "contactEmail", "phoneNumber"];
+		for (let i = 0; i < 4; i++) {
+			document.getElementById(ids[i]).removeAttribute("readonly");
+		}
+		document.getElementById("screen-container").setAttribute("state", "editmode");
+		state = editmode;
+	}
+}
 

@@ -31,7 +31,7 @@
 				<button type="button" class="submitbutton" onclick="createContact();">Catch Person!</button>
 				<button type="button" class="submitbutton" onclick="cancelCreate();">Cancel</button>
 
-				<p id="createError" style="color:red; font-size:40;"></p>
+				<!-- <p id="createError" style="color:red; font-size:40;"></p> -->
 			</div>
 			<button type="button" id=createButton class="submitbutton" onclick="createContactField();">Create Contact</button>
 			</br></br>
@@ -70,7 +70,7 @@
 		</div>
 
 		<div id="main-body-container">
-			<div class="boxed emptymode" id="screen-container">
+			<div class="boxed" state="emptymode" id="screen-container">
 				<div style="margin:auto">
 					<div class="resultsborder">
 						<div class="top-screen-lights">
@@ -93,22 +93,21 @@
 						</form>
 
 						<div class="side-button-container">
-							<button type="button" class="button" id="addbutton" onclick="createContact();">Add</button>
+							<button type="button" class="button" id="addbutton" onclick="viewer.setCreate();">Add</button>
 							<button type="button" class="button" id="editbutton" onclick="editCreate();">Edit</button>
 							<button type="button" class="button" id="deletebutton" onclick="deleteContact();">Del</button>
 						</div>
 						
 						<div class="bottom-button-container">
 							<button type="button" class="button" id="submitbutton" onclick="done();">Done</button>
-							<button type="button" class="button" id="cancelbutton" onclick="cancelCreate();">Cancel</button>
+							<button type="button" class="button" id="cancelbutton" onclick="cancel();">Cancel</button>
 						</div>
 
 						<!-- <button type="button" id=createButton class="submitbutton" onclick="createContactField();" style="display:none">Create Contact</button> -->
 						
 						
-						<!-- <p id="createError" style="color:red; font-size:40;"></p> -->
-
-
+						
+						
 						<div>
 							<div class="line"></div>
 							<div class="line"></div>
@@ -116,6 +115,7 @@
 							<div class="line"></div>
 						</div>
 					</div>
+					<p id="createError" style="color:red; font-size:25px;"></p>
 				</div>
 			</div>
 

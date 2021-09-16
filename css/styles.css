@@ -183,28 +183,28 @@ form.results {
 	width: 70%;
 }
 
-.emptymode .results {
+[state=emptymode] .results {
 	color: darkslategrey;
 	background-color: #7da77d;
 }
 
-.emptymode .bottom-button-container,
-.emptymode #editbutton,
-.emptymode #deletebutton {
+[state=emptymode] .bottom-button-container,
+[state=emptymode] #editbutton,
+[state=emptymode] #deletebutton {
 	display: none;
 }
 
-.viewingmode .bottom-button-container {
+[state=viewingmode] .bottom-button-container {
 	display: none;
 }
 
-.createmode #editbutton, 
-.createmode #deletebutton {
+[state=createmode] #editbutton, 
+[state=createmode] #deletebutton {
 	display: none;
 }
 
-.editmode #addbutton, 
-.editmode #deletebutton {
+[state=editmode] #addbutton, 
+[state=editmode] #deletebutton {
 	visibility: hidden;
 }
 
