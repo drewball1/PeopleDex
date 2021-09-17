@@ -170,7 +170,9 @@ function createContact() {
 				setTimeout(cancelCreate, 3000);
 
 				viewer.setViewing();
-				reloadSearch();
+				if(document.getElementsByClassName("selected")[0] != undefined){
+					reloadSearch();
+				}
 				populateWithSelected();
 			}
 		};
@@ -197,25 +199,27 @@ function cancel() {
 
 // called after add or edit, following the refreshResults(). If the previously selected contact isn't in the list anymore
 function populateWithSelected() {
-	document.getElementById("contactFirstName").value = document.getElementById(selectedID).getAttribute("firstname");
-	document.getElementById("contactLastName").value = document.getElementById(selectedID).getAttribute("lastname");
-	document.getElementById("contactEmail").value = document.getElementById(selectedID).getAttribute("email");
-	document.getElementById("phoneNumber").value = document.getElementById(selectedID).getAttribute("phone");
+	if(document.getElementById(selectedID) != undefined){
+		document.getElementById("contactFirstName").value = document.getElementById(selectedID).getAttribute("firstname");
+		document.getElementById("contactLastName").value = document.getElementById(selectedID).getAttribute("lastname");
+		document.getElementById("contactEmail").value = document.getElementById(selectedID).getAttribute("email");
+		document.getElementById("phoneNumber").value = document.getElementById(selectedID).getAttribute("phone");
+	}
 }
 
 function deleteContact() {
-	var del = confirm("Once released, fname is gone forever. Ok?");
+	var del = confirm("Once released, " + document.getElementById("contactFirstName").value + " " +  document.getElementById("contactLastName").value + " is gone forever. Ok?");
 
 	if (del == false) {
 		return;
 	}
 	else {
-		cancelCreate();
-		document.getElementById("searchBox").style.visibility = 'hidden';
-		document.getElementById("createButton").style.visibility = 'hidden';
-		document.getElementById("letterSearch").style.visibility = 'hidden';
-		document.getElementById("header").style.display = 'none';
-		var tmp = { ID: getElementsByClassName("selected")[0].id };
+		//cancelCreate();
+		//document.getElementById("searchBox").style.visibility = 'hidden';
+		//document.getElementById("createButton").style.visibility = 'hidden';
+		//document.getElementById("letterSearch").style.visibility = 'hidden';
+		//document.getElementById("header").style.display = 'none';
+		var tmp = { ID: document.getElementsByClassName("selected")[0].id };
 		var jsonPayload = JSON.stringify(tmp);
 
 		var url = urlBase + '/contacts/deleteContact.' + extension;
@@ -226,10 +230,12 @@ function deleteContact() {
 		try {
 			xhr.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {
-					var jsonObject = JSON.booleanResult(xhr.responseText);
-					if (jsonObject.results) {
-						document.getElementById("success").innerHTML = 'fname lname was released outside.'
+					var jsonObject = JSON.parse(xhr.responseText);
+					if (jsonObject.booleanResult == 1) {
+						document.getElementById("success").innerHTML =  document.getElementById("contactFirstName").value + " " +  document.getElementById("contactLastName").value + " was released outside.";
+						reloadSearch();
 						setTimeout(cancelCreate, 3000);
+
 					}
 
 					else {
@@ -256,10 +262,15 @@ function select(id) {
 	if (original != undefined) {
 		original.className = "unselected";
 	}
-	document.getElementById(id).className = "selected";
+	if(document.getElementById(id) != undefined){
+		document.getElementById(id).className = "selected";
 
 	selectedID = id;
 	populateWithSelected();
+	}
+	else{
+		selectedID = -1;
+	}
 	viewer.setViewing();
 }
 
@@ -399,12 +410,13 @@ function searchLtr(ltr) {
 	var srch = ltr;
 	lastType = "ltr";
 	lastSearch = ltr;
-	document.getElementById("searchText").innerHTML = "";
 	document.getElementById("resultsList").innerHTML = "";
+	document.getElementById("searchResultBanner").innerHTML = ""
 
 	var contactList = "";
+	readCookie();
 
-	var tmp = { search: srch, userId: userId };
+	var tmp = { search: srch, userID: userId };
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/contacts/searchByUserAndLetter.' + extension;
@@ -415,24 +427,27 @@ function searchLtr(ltr) {
 	try {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
-				document.getElementById("resultsList").innerHTML = ""
 				var jsonObject = JSON.parse(xhr.responseText);
-				if (jsonObject.results.length == 0) {
+				if (jsonObject.meta.NumberOfResults == 0) {
 					document.getElementById("searchResultBanner").innerHTML = "No Results Found";
 				}
 
 				else {
 					document.getElementById("searchResultBanner").innerHTML = "Search Results:";
 
-					for (var i = 0; i < jsonObject.length; i++) {
+					for (var i = 0; i < jsonObject.info.length; i++) {
+						var info = jsonObject.info[i];
 						contactList += "<li class='unselected' id='";
-						contactList += jsonObject.getInt("ID"); //get id specifically
-						contactList += " onclick='select(this.id);'>";
-						contactList += jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"); //get first name and last name specifically
+						contactList += info.ID; //get id specifically
+						contactList += "' onclick='select(this.id);'";
+						contactList += " firstname='" + info.FirstName;
+						contactList += "' lastname='" + info.LastName;
+						contactList += "' email='" + info.EmailAddress;
+						contactList += "' phone='" + info.PhoneNumber + "'>";
+						contactList += info.FirstName + " " + info.LastName; //get first name and last name specifically
 						contactList += "</li>";
 					}
-
-					document.getElementById("contactSearchResult").innerHTML = contactList;
+					document.getElementById("resultsList").innerHTML = contactList;
 				}
 			}
 		};
@@ -447,7 +462,7 @@ function searchLtr(ltr) {
 function editContact() {
 	viewer.setEdit();
 
-	var tmp = { ID: getElementsByClassName("selected")[0].id };
+	/*var tmp = { ID: document.getElementsByClassName("selected")[0].id };
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/core/Contact.' + extension;
@@ -466,7 +481,7 @@ function editContact() {
 	}
 	catch (err) {
 		document.getElementById("searchResultBanner").innerHTML = err.message;
-	}
+	}*/
 }
 
 
@@ -482,7 +497,11 @@ function submitEdit() {
 	var email = document.getElementById("contactEmail").value; //change to the form id
 	var phone = document.getElementById("phoneNumber").value; //change to the form id
 
-	var tmp = { ID: getElementsByClassName("selected")[0].id, firstName: fname, lastName: lname, email: email, phone: phoneNumber };
+	if(lname == undefined) lname = "";
+	if(email == undefined) email = "";
+	if(phone == undefined) phone = "";
+
+	var tmp = { ID: document.getElementsByClassName("selected")[0].id, firstName: fname, lastName: lname, emailAddress: email, phoneNumber: phone };
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/contacts/editContact.' + extension;
@@ -495,6 +514,8 @@ function submitEdit() {
 		xhr.onreadystatechange = function () {
 			if (this.readyState == 4 && this.status == 200) {
 				reloadSearch();
+				viewer.state = viewer.setViewing;
+				select(selectedID);
 
 			}
 		};
@@ -508,43 +529,50 @@ function submitEdit() {
 
 function reloadSearch() {
 	if (lastType == "ltr") {
-		searchLtr(ltr);
+		searchLtr(lastSearch);
 		return;
 	}
 	else {
-		document.getElementById("contactSearchResult").innerHTML = "";
+		document.getElementById("resultsList").innerHTML = "";
 
 		var contactList = "";
 		var srch = lastSearch;
-		var tmp = { search: srch, userId: userId };
+		unselect();
+		readCookie();
+		var tmp = { search: srch, userID: userId };
 		var jsonPayload = JSON.stringify(tmp);
-
+	
 		var url = urlBase + '/contacts/search.' + extension;
-
+	
 		var xhr = new XMLHttpRequest();
 		xhr.open("POST", url, true);
 		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 		try {
 			xhr.onreadystatechange = function () {
 				if (this.readyState == 4 && this.status == 200) {
-					document.getElementById("resultsList").innerHTML = ""
+					
 					var jsonObject = JSON.parse(xhr.responseText);
-					if (jsonObject.results.length == 0) {
+					if (jsonObject.meta.NumberOfResults == 0) {
 						document.getElementById("searchResultBanner").innerHTML = "No Results Found";
 					}
-
+	
 					else {
 						document.getElementById("searchResultBanner").innerHTML = "Search Results:";
-
-						for (var i = 0; i < jsonObject.results.length; i++) {
+	
+						for (var i = 0; i < jsonObject.info.length; i++) {
+							var info = jsonObject.info[i];
 							contactList += "<li class='unselected' id='";
-							contactList += jsonObject.getInt("ID"); //get id specifically
-							contactList += " onclick='select(this.id);'>";
-							contactList += jsonObject.getString("firstName") + " " + jsonObject.getString("lastName"); //get first name and last name specifically
+							contactList += info.ID; //get id specifically
+							contactList += "' onclick='select(this.id);'";
+							contactList += " firstname='" + info.FirstName;
+							contactList += "' lastname='" + info.LastName;
+							contactList += "' email='" + info.EmailAddress;
+							contactList += "' phone='" + info.PhoneNumber + "'>";
+							contactList += info.FirstName + " " + info.LastName; //get first name and last name specifically
 							contactList += "</li>";
 						}
-
-						document.getElementById("contactSearchResult").innerHTML = contactList;
+	
+						document.getElementById("resultsList").innerHTML = contactList;
 					}
 				}
 			};
@@ -553,6 +581,7 @@ function reloadSearch() {
 		catch (err) {
 			document.getElementById("searchResultBanner").innerHTML = err.message;
 		}
+	
 	}
 }
 
@@ -604,3 +633,11 @@ const viewer = {
 	}
 }
 
+function unselect(){
+	var temp;
+	var temp = document.getElementsByClassName("selected")[0];
+	selectedID = temp;
+	if(temp != undefined) {
+		temp.className = "unselected";
+	}
+}
