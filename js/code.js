@@ -129,15 +129,34 @@ function beginCreateContact() {
 	viewer.setCreate();
 }
 
-//function messageOn(){
- //   document.getElementById("success").style.display = 'inline-block';
- //   document.getElementById("resultsScreen").style.display = 'none';
-//}
+/*function messageOn(){
+    document.getElementById("success").style.display = 'inline-block';
+    
+    document.getElementById("labelFirstName").innerHTML = "";
+    document.getElementById("labelLastName").innerHTML = "";
+    document.getElementById("labelEmail").innerHTML = "";
+    document.getElementById("labelPhone").innerHTML = "";
+    
+    document.getElementById("contactFirstName").style.display = 'none';
+    document.getElementById("contactLastName").style.display = 'none';
+    document.getElementById("contactEmail").style.display = 'none';
+    document.getElementById("phoneNumber").style.display = 'none';
+    
+}*/
 
-//function messageOff(){
-  //  document.getElementById("resultsScreen").style.display = 'inline-block';
-  //  document.getElementById("success").style.display = 'none';
-//}
+/*function messageOff(){
+    document.getElementById("labelFirstName").innerHTML = "First Name:";
+    document.getElementById("labelLastName").innerHTML = "Last Name:";
+    document.getElementById("labelEmail").innerHTML = "Email:";
+    document.getElementById("labelPhone").innerHTML = "Phone:";
+    
+    document.getElementById("contactFirstName").style.display = 'inline-block';
+    document.getElementById("contactLastName").style.display = 'inline-block';
+    document.getElementById("contactEmail").style.display = 'inline-block';
+    document.getElementById("phoneNumber").style.display = 'inline-block';
+    
+    document.getElementById("success").style.display = 'none';
+}*/
 
 function createContact() {
 	var fname = document.getElementById("contactFirstName").value;
@@ -179,7 +198,7 @@ function createContact() {
         //messageOn();
 				document.getElementById("success").innerHTML = 'Alright! ' + fname + ' ' + lname + ' was caught! New PeopleDex data will be added for ' + fname + ' ' + lname + '!';
 				//setTimeout(messageOff, 2000);
-        setTimeout(cancelCreate, 2000);
+        cancelCreate();
 				setTimeout(viewer.setEmpty, 2000);
 				if(document.getElementsByClassName("selected")[0] != undefined){
 					reloadSearch();
