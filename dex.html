@@ -2,8 +2,62 @@
 <html>
 <head>
 	<script type="text/javascript" src="/js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
+    <link href="/css/styles.css" rel="stylesheet">	
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
+    <! new code>
+    <style>
+        .nav{
+            display: inline;
+            padding-left: .75%;
+            padding-right: .75%;
+            height: 2%;
+            border-right: 2px solid white;
+            background-color:#393e46;
+            padding-bottom: .15%;
+            padding-top: .25%;
+            font-family: "pokefont";
+			cursor: pointer;
+        }
+
+		.nav:hover{
+			background-color:#474c53;
+		}
+
+        .logout{
+			display:inline;
+			float:right;
+            padding-left:6%; 
+            padding-right:10%;
+            font-family: "pokefont";
+			cursor: pointer;
+			background-color:#393e46;
+			padding-bottom: .15%;
+            padding-top: .25%;
+			margin-bottom: 20%;
+			font-size:20px;
+			color: #f7f7e7;
+        }
+
+		.logout:hover{
+			background-color:#474c53;
+		}
+        .ulnav{
+            position: fixed; 
+            top: 0; 
+            width: 100%; 
+            background-color:#474c53; 
+            display:inline-block; 
+            height:2.3%; 
+            padding-bottom: .2%; 
+            padding-top: .2%; 
+            margin-bottom: 2%; 
+            z-index: 10;
+            font-family: "pokefont";
+			cursor: pointer;
+        }
+    </style>
+    <! end new code>
 	
 	<script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() 
@@ -13,9 +67,45 @@
 	</script>
 </head>
 <body>
+    <! new code>
+	<nav class=menu style= "position: fixed; display:inline-block; top: 0; width: 100%;  margin-bottom: 2%;  padding-bottom: .5%; padding-top: .25%; height: 2%; background-color:#393e46; font-family: 'pokefont'; font-weight: bold;"> Search By Letter:
+	<ul class="ulnav">
+		<li class="nav" onclick="searchLtr('a')">A</li>
+		<li class="nav" onclick="searchLtr('b')">B</li>
+		<li class="nav" onclick="searchLtr('c')">C</li>
+		<li class="nav" onclick="searchLtr('d')">D</li>
+		<li class="nav" onclick="searchLtr('e')">E</li>
+		<li class="nav" onclick="searchLtr('f')">F</li>
+		<li class="nav" onclick="searchLtr('g')">G</li>
+		<li class="nav" onclick="searchLtr('h')">H</li>
+		<li class="nav" onclick="searchLtr('i')">I</li>
+		<li class="nav" onclick="searchLtr('j')">J</li>
+		<li class="nav" onclick="searchLtr('k')">K</li>
+		<li class="nav" onclick="searchLtr('l')">L</li>
+		<li class="nav" onclick="searchLtr('m')">M</li>
+		<li class="nav" onclick="searchLtr('n')">N</li>
+		<li class="nav" onclick="searchLtr('o')">O</li>
+		<li class="nav" onclick="searchLtr('p')">P</li>
+		<li class="nav" onclick="searchLtr('q')">Q</li>
+		<li class="nav" onclick="searchLtr('r')">R</li>
+		<li class="nav" onclick="searchLtr('s')">S</li>
+		<li class="nav" onclick="searchLtr('t')">T</li>
+		<li class="nav" onclick="searchLtr('u')">U</li>
+		<li class="nav" onclick="searchLtr('v')">V</li>
+		<li class="nav" onclick="searchLtr('w')">W</li>
+		<li class="nav" onclick="searchLtr('x')">X</li>
+		<li class="nav" onclick="searchLtr('y')">Y</li>
+		<li class="nav" onclick="searchLtr('z')">Z</li>
+		<form id="searchBox" style="display: inline; padding-left: 2%;"> 
+			<input type="search" id="searchText" name="query" placeholder="Search...">
+			<button type ="button" class="searchbutton" onclick="searchContacts()">Search Box</button>
+		</form>
+		<li class="logout" style="border-left: 2px solid white; text-align: center;" onclick="doLogout()">Sign Out</li>
+	</ul>
+	</nav>
 	<div class="page-wrap">
-		<p align="center"><a onclick="location.reload()"><img src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"  alt="pokemon-font" border="0"></a></p>
-		<div class="boxed" id="whatBox">
+		<div class="boxed" style="display: block; padding-top: 1%; height:auto; z-index: -1;  margin-top: 6%"><a style="display:block; height:auto; z-index: 1; position: relative; padding-top: 1%;" onclick="location.reload()"><img src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"  alt="pokemon-font" border="0"></a></div>
+		<div class="boxed" id="whatBox" style="display:none;">
 		
 			<h1 id="header" style="font-size:40px;font-family:'pokefont';">What would you like to do?</h1>
 			<h1 id="userName" style="font-size:20px;font-family:'pokefont';"></h1>
@@ -41,7 +131,7 @@
 				<button type ="button" class="searchbutton" onclick="searchContacts()">Search Box</button>
 			</form>
 		</div>
-		<div class="boxed boxedletter" id="letterSearch">
+		<div class="boxed boxedletter" style="display:none;" id="letterSearch">
 			<button type="button" class="searchbutton" onclick="searchLtr('a')">A</button>
 			<button type="button" class="searchbutton" onclick="searchLtr('b')">B</button>
 			<button type="button" class="searchbutton" onclick="searchLtr('c')">C</button>
