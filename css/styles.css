@@ -11,6 +11,7 @@ input[type=submit] {
 button {
 	font-family: "pokefont";
 	display:inline-block;
+  cursor: pointer;
 }
 
 .top-screen-lights {
@@ -57,6 +58,7 @@ button {
 	border-radius: 40px;
 	border: 3px solid #356ABC;
 	display:inline-block;
+  cursor: pointer;
 }
 
 .searchbutton {
@@ -66,6 +68,7 @@ button {
 	background-color: #ffcd00;
 	border-radius: 40px;
 	border: 3px solid #356ABC;
+  cursor: pointer;
 }
 
 h1 {
@@ -111,6 +114,7 @@ ul {
 	padding: 0;
 	margin: 0;
 	margin-left: 1em;
+  height: 70%;
 }
 
 li.selected {
@@ -232,7 +236,8 @@ form.results {
 }
 
 body {
-	background-image: url("https://wallpapercave.com/wp/wp2432933.jpg");
+	/*background-image: url("https://wallpapercave.com/wp/wp2432933.jpg");*/
+  background-image: url(../images/pokewallpaper3.png);
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-color: #cccccc;
