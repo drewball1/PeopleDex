@@ -22,8 +22,8 @@ function doLogin() {
 
 	document.getElementById("loginResult").innerHTML = "";
 
-	var tmp = {login:login,password:password};
-	// var tmp = { login: login, password: hash };
+	//var tmp = {login:login,password:password};
+	var tmp = { login: login, password: hash };
 	var jsonPayload = JSON.stringify(tmp);
 
 	var url = urlBase + '/users/login.' + extension;
@@ -129,6 +129,16 @@ function beginCreateContact() {
 	viewer.setCreate();
 }
 
+//function messageOn(){
+ //   document.getElementById("success").style.display = 'inline-block';
+ //   document.getElementById("resultsScreen").style.display = 'none';
+//}
+
+//function messageOff(){
+  //  document.getElementById("resultsScreen").style.display = 'inline-block';
+  //  document.getElementById("success").style.display = 'none';
+//}
+
 function createContact() {
 	var fname = document.getElementById("contactFirstName").value;
 	if (document.getElementById("contactFirstName").value.length == 0) {
@@ -166,10 +176,11 @@ function createContact() {
 				// document.getElementById("createButton").style.visibility = 'hidden';
 				// document.getElementById("letterSearch").style.visibility = 'hidden';
 				// document.getElementById("header").style.display = 'none';
+        //messageOn();
 				document.getElementById("success").innerHTML = 'Alright! ' + fname + ' ' + lname + ' was caught! New PeopleDex data will be added for ' + fname + ' ' + lname + '!';
-				setTimeout(cancelCreate, 3000);
-
-				viewer.setViewing();
+				//setTimeout(messageOff, 2000);
+        setTimeout(cancelCreate, 2000);
+				setTimeout(viewer.setEmpty, 2000);
 				if(document.getElementsByClassName("selected")[0] != undefined){
 					reloadSearch();
 				}
@@ -193,13 +204,18 @@ function done() {
 }
 
 function cancel() {
-	viewer.setViewing();
-	populateWithSelected();
+  if(document.getElementsByClassName("selected")[0] != undefined){
+  	viewer.setViewing();
+	  populateWithSelected();
+  }
+  else{
+    viewer.setEmpty();
+  }
 }
 
 // called after add or edit, following the refreshResults(). If the previously selected contact isn't in the list anymore
 function populateWithSelected() {
-	if(document.getElementById(selectedID) != undefined){
+	if(document.getElementsByClassName("selected")[0] != undefined){
 		document.getElementById("contactFirstName").value = document.getElementById(selectedID).getAttribute("firstname");
 		document.getElementById("contactLastName").value = document.getElementById(selectedID).getAttribute("lastname");
 		document.getElementById("contactEmail").value = document.getElementById(selectedID).getAttribute("email");
