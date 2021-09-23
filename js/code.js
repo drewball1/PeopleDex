@@ -111,8 +111,6 @@ function createContactField() {
 
 function cancelCreate() {
 	document.getElementById("createError").innerHTML = ' ';
-	document.getElementById("success").innerHTML = '';
-	document.getElementById("createForm").style.display = 'none';
 	document.getElementById("contactFirstName").value = '';
 	document.getElementById("contactLastName").value = '';
 	document.getElementById("contactEmail").value = '';
@@ -120,8 +118,6 @@ function cancelCreate() {
 	document.getElementById("searchBox").style.visibility = 'visible';
 	document.getElementById("createButton").style.visibility = 'visible';
 	document.getElementById("letterSearch").style.visibility = 'visible';
-	document.getElementById("header").innerHTML = "What would you like to do?";
-	document.getElementById("header").style.display = 'inline';
 }
 
 function beginCreateContact() {
@@ -129,10 +125,10 @@ function beginCreateContact() {
 	viewer.setCreate();
 }
 
-/*function messageOn(){
-    document.getElementById("success").style.display = 'inline-block';
-    
-    document.getElementById("labelFirstName").innerHTML = "";
+function messageOn(){
+    document.getElementById("success").style.display = 'block';
+    document.getElementById("logo").style.display = 'none';
+    /*(document.getElementById("labelFirstName").innerHTML = "";
     document.getElementById("labelLastName").innerHTML = "";
     document.getElementById("labelEmail").innerHTML = "";
     document.getElementById("labelPhone").innerHTML = "";
@@ -140,12 +136,12 @@ function beginCreateContact() {
     document.getElementById("contactFirstName").style.display = 'none';
     document.getElementById("contactLastName").style.display = 'none';
     document.getElementById("contactEmail").style.display = 'none';
-    document.getElementById("phoneNumber").style.display = 'none';
+    document.getElementById("phoneNumber").style.display = 'none';*/
     
-}*/
+}
 
-/*function messageOff(){
-    document.getElementById("labelFirstName").innerHTML = "First Name:";
+function messageOff(){
+    /*document.getElementById("labelFirstName").innerHTML = "First Name:";
     document.getElementById("labelLastName").innerHTML = "Last Name:";
     document.getElementById("labelEmail").innerHTML = "Email:";
     document.getElementById("labelPhone").innerHTML = "Phone:";
@@ -153,10 +149,13 @@ function beginCreateContact() {
     document.getElementById("contactFirstName").style.display = 'inline-block';
     document.getElementById("contactLastName").style.display = 'inline-block';
     document.getElementById("contactEmail").style.display = 'inline-block';
-    document.getElementById("phoneNumber").style.display = 'inline-block';
+    document.getElementById("phoneNumber").style.display = 'inline-block';*/
     
+    
+    document.getElementById("logo").style.display = 'block';
     document.getElementById("success").style.display = 'none';
-}*/
+    document.getElementById("success").innerHTML = "";
+}
 
 function createContact() {
 	var fname = document.getElementById("contactFirstName").value;
@@ -195,15 +194,16 @@ function createContact() {
 				// document.getElementById("createButton").style.visibility = 'hidden';
 				// document.getElementById("letterSearch").style.visibility = 'hidden';
 				// document.getElementById("header").style.display = 'none';
-        //messageOn();
-				document.getElementById("success").innerHTML = 'Alright! ' + fname + ' ' + lname + ' was caught! New PeopleDex data will be added for ' + fname + ' ' + lname + '!';
-				//setTimeout(messageOff, 2000);
+        messageOn();
+				var msg = 'Alright! ' + fname + ' ' + lname + ' was caught! New PeopleDex data will be added for ' + fname + ' ' + lname + '!';
+        typeMessage(0, msg);
+				setTimeout(messageOff, 4000);
         cancelCreate();
-				setTimeout(viewer.setEmpty, 2000);
-				if(document.getElementsByClassName("selected")[0] != undefined){
-					reloadSearch();
-				}
-				populateWithSelected();
+        viewer.clearForm();
+				setTimeout(viewer.setEmpty, 4000);
+        selectedID = -1;
+        
+        reloadSearch();
 			}
 		};
 		xhr.send(jsonPayload);
@@ -232,7 +232,7 @@ function cancel() {
   }
 }
 
-// called after add or edit, following the refreshResults(). If the previously selected contact isn't in the list anymore
+// called after add or edit, following the reloadSearch(). If the previously selected contact isn't in the list anymore
 function populateWithSelected() {
 	if(document.getElementsByClassName("selected")[0] != undefined){
 		document.getElementById("contactFirstName").value = document.getElementById(selectedID).getAttribute("firstname");
@@ -267,9 +267,15 @@ function deleteContact() {
 				if (this.readyState == 4 && this.status == 200) {
 					var jsonObject = JSON.parse(xhr.responseText);
 					if (jsonObject.booleanResult == 1) {
-						document.getElementById("success").innerHTML =  document.getElementById("contactFirstName").value + " " +  document.getElementById("contactLastName").value + " was released outside.";
+             
+            messageOn();
+						var msg = document.getElementById("contactFirstName").value + " " +  document.getElementById("contactLastName").value + " was released outside.";
+            typeMessage(0, msg);
+            setTimeout(messageOff, 3000);
+            cancelCreate();
+            viewer.clearForm();
+				    setTimeout(viewer.setEmpty, 3000);
 						reloadSearch();
-						setTimeout(cancelCreate, 3000);
 
 					}
 
@@ -288,9 +294,9 @@ function deleteContact() {
 }
 
 function select(id) {
-	if (viewer.state == viewer.editmode || viewer.state == viewer.createmode) {
+	/*if (viewer.state == viewer.editmode || viewer.state == viewer.createmode) {
 		return;
-	}
+	}*/
 	var original;
 
 	var original = document.getElementsByClassName("selected")[0];
@@ -303,6 +309,7 @@ function select(id) {
 	selectedID = id;
 	populateWithSelected();
 	}
+ 
 	else{
 		selectedID = -1;
 	}
@@ -311,6 +318,8 @@ function select(id) {
 
 function searchContacts() {
 	var srch = document.getElementById("searchText").value;
+  var flag = 0;
+  if(srch == "") flag = 1;
 	lastSearch = srch;
 	lastType = "search";
 	document.getElementById("resultsList").innerHTML = "";
@@ -332,12 +341,17 @@ function searchContacts() {
 			if (this.readyState == 4 && this.status == 200) {
 				
 				var jsonObject = JSON.parse(xhr.responseText);
+        
 				if (jsonObject.meta.NumberOfResults == 0) {
 					document.getElementById("searchResultBanner").innerHTML = "No Results Found";
 				}
 
-				else {
-					document.getElementById("searchResultBanner").innerHTML = "Search Results:";
+				else{
+          if(flag == 1) document.getElementById("searchResultBanner").innerHTML = "All Contacts:";
+          
+					else{
+            document.getElementById("searchResultBanner").innerHTML = "Search Results:";
+          }
 
 					for (var i = 0; i < jsonObject.info.length; i++) {
 						var info = jsonObject.info[i];
@@ -671,8 +685,24 @@ const viewer = {
 function unselect(){
 	var temp;
 	var temp = document.getElementsByClassName("selected")[0];
-	selectedID = temp;
+	selectedID = -1;
 	if(temp != undefined) {
 		temp.className = "unselected";
 	}
+}
+
+function typeMessage(index, message){
+   if(index == message.length) return;
+   
+   else{
+     typeLetter(message.charAt(index));
+     index += 1;
+     setTimeout(function(){
+       typeMessage(index, message);
+     }, 20);
+   }
+}
+
+function typeLetter(ltr){
+  document.getElementById("success").innerHTML += ltr;
 }
