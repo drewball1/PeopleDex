@@ -8,6 +8,56 @@ input[type=submit] {
 	font-size: 20px;
 }
 
+.nav{
+  display: inline;
+  padding-left: .75%;
+  padding-right: .75%;
+  height: 2%;
+  border-right: 2px solid white;
+  background-color:#393e46;
+  padding-top: .25%;
+  color: #f7f7e7; 
+  font-family: "pokefont";
+  cursor: pointer;
+}
+
+.nav:hover{
+  background-color:#474c53
+}
+
+.logout{
+  display:inline;
+  float:right;
+  padding-left:6%; 
+  padding-right:10%;
+  font-family: "pokefont";
+  cursor: pointer;
+  background-color:#393e46;
+  font-size:20px;
+  color: #f7f7e7;
+}
+
+.logout:hover{
+  background-color:#474c53;
+}
+        
+.ulnav{
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+  background-color:#393e46;
+  display:inline-block; 
+  height:2.3%; 
+  padding-bottom: .2%; 
+  padding-top: .2%; 
+  margin-bottom: 2%; 
+  z-index: 10;
+  color: #f7f7e7; 
+  font-family: "pokefont";
+  cursor: pointer;
+  border-bottom: 2px solid white;
+}
+        
 button {
 	font-family: "pokefont";
 	display:inline-block;
@@ -91,6 +141,25 @@ h1 {
 	box-sizing: border-box;
 }
 
+#success{
+  /*-webkit-animation: type 2s steps(60, end);*/ 
+  font-family: 'pokefont'; 
+  font-size: 40px; 
+  display: none;
+  height:auto;  
+  padding-top: 1%;
+  color: black;
+}
+
+@-webkit-keyframes type {
+  0%{ 
+    width: 0;
+  }
+  100%{
+    width: 100%
+  }
+}
+
 #main-body-container {
 	position: relative;
 	height: 550px;
@@ -101,6 +170,15 @@ h1 {
 	height: 100%;
 	right: 0;
 	width: 60%;
+}
+
+#logo{
+  display:block; 
+  height:auto; 
+  z-index: 1; 
+  position: relative; 
+  padding-top: 1%; 
+  cursor: pointer;
 }
 
 #contactSearchResults {
@@ -118,10 +196,10 @@ ul {
 }
 
 li.selected {
-	background-image: url(../images/openpokeball.png);
+	background-image: url(../images/openpokeball2.png);
 	padding:10px;
 	font-family: "pokefont";
-	font-size: 20px;
+	font-size: 30px;
 	background-repeat: no-repeat;
 	display: block;
 	background-position: -4px 7px;
@@ -129,14 +207,15 @@ li.selected {
 }
 
 li.unselected {
-	background-image: url(../images/pokeball.png);
+	background-image: url(../images/pokeball2.png);
 	padding:10px;
 	font-family: "pokefont";
-	font-size: 20px;
+	font-size: 30px;
 	background-repeat: no-repeat;
 	background-position: 0 15px;
 	display: block;
 	padding-left: 1em;
+  cursor: pointer;
 }
 
 div.boxed {
@@ -238,7 +317,7 @@ form.results {
 body {
 	/*background-image: url("https://wallpapercave.com/wp/wp2432933.jpg");*/
   background-image: url(../images/pokewallpaper3.png);
-	background-repeat: no-repeat;
+	background-repeat: repeat;
 	background-size: cover;
 	background-color: #cccccc;
 }
