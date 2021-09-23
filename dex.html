@@ -4,66 +4,18 @@
 	<script type="text/javascript" src="/js/code.js"></script>
     <link href="/css/styles.css" rel="stylesheet">	
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
-
-    <! new code>
-    <style>
-        .nav{
-            display: inline;
-            padding-left: .75%;
-            padding-right: .75%;
-            height: 2%;
-            border-right: 2px solid white;
-            background-color:#393e46;
-            padding-top: .25%;
-			color: #f7f7e7; 
-            font-family: "pokefont";
-			cursor: pointer;
-        }
-
-		.nav:hover{
-			background-color:#474c53
-		}
-
-        .logout{
-			display:inline;
-			float:right;
-            padding-left:6%; 
-            padding-right:10%;
-            font-family: "pokefont";
-			cursor: pointer;
-			background-color:#393e46;
-			font-size:20px;
-			color: #f7f7e7;
-        }
-
-		.logout:hover{
-			background-color:#474c53;
-		}
-        .ulnav{
-            position: fixed; 
-            top: 0; 
-            width: 100%; 
-            background-color:#393e46;
-            display:inline-block; 
-            height:2.3%; 
-            padding-bottom: .2%; 
-            padding-top: .2%; 
-            margin-bottom: 2%; 
-            z-index: 10;
-			color: #f7f7e7; 
-            font-family: "pokefont";
-			cursor: pointer;
-			border-bottom: 2px solid white;
-        }
-    </style>
-    <! end new code>
 	
 	<script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() 
 	{
 		readCookie();
 	}, false);
+
+	document.addEventListener('DOMContentLoaded', function() {
+    searchContacts();
+	}, false);
 	</script>
+	
 </head>
 <body>
     <! new code padding-bottom: .5%;>
@@ -103,12 +55,15 @@
 	</ul>
 	</nav>
 	<div class="page-wrap">
-		<div class="boxed" style="display: block; padding-top: 1%; height:auto; z-index: -1;  margin-top: 6%"><a style="display:block; height:auto; z-index: 1; position: relative; padding-top: 1%;" onclick="location.reload()"><img src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"  alt="pokemon-font" border="0"></a></div>
+		<div class="boxed" style="display: block; padding-top: 1%; height:auto; z-index: -1;  margin-top: 6%">
+			<p id="success"></p>
+			<a id="logo" onclick="location.reload()"><img src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"  alt="pokemon-font" border="0"></a>
+		</div>
 		<div class="boxed" id="whatBox" style="display:none;">
 		
 			<h1 id="header" style="font-size:40px;font-family:'pokefont';">What would you like to do?</h1>
 			<h1 id="userName" style="font-size:20px;font-family:'pokefont';"></h1>
-			<h1 id="success" style="font-size:30px;font-family:'pokefont';"></h2>
+			<h1 id="successOld" style="font-size:30px;font-family:'pokefont';"></h2>
 			<div id="createForm" style="display:none">
 				<label for='contactFirstName'>First Name:</label></br>
 					<!input type='text' id='contactFirstName' name='fname' required></br>
@@ -168,18 +123,17 @@
 							<div class="light red"></div>
 							<div class="light red"></div>
 						</div>
-						<p id="success" style="animation: type 2s steps(60, end); font-family: 'pokefont'; font-size: 20px; display: none;"></p>
 						<form action="" id="resultsScreen" class="results" spellcheck="false">
-							<label for='contactFirstName'>First Name:</label>
+							<label id="labelFirstName" for='contactFirstName'>First Name:</label>
 							<input type='text' id='contactFirstName' name='fname' required readonly>
 							
-							<label for='contactLastName'>Last Name:</label>
+							<label id="labelLastName" for='contactLastName'>Last Name:</label>
 							<input type='text' id='contactLastName' name='lname' readonly>
 							
-							<label for='contactEmail'>Email:</label>
+							<label id="labelEmail" for='contactEmail'>Email:</label>
 							<input type='email' id='contactEmail' name='email'readonly>
 							
-							<label for='phoneNumber'>Phone:</label>
+							<label id="labelPhone" for='phoneNumber'>Phone:</label>
 							<input type='tel' id='phoneNumber' name='fname'readonly>
 						</form>
 
@@ -207,7 +161,7 @@
 						</div>
 					</div>
 					<p id="createError" style="color:red; font-size:25px;"></p>
-					<!-- <p id="success" style="color:greenyellow; font-size:25px;"></p> -->
+					<!-- <p id="successNo" style="color:greenyellow; font-size:25px;"></p> -->
 				</div>
 			</div>
 
