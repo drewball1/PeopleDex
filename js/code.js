@@ -5,8 +5,7 @@ var userId = 0;
 var firstName = "";
 var lastName = "";
 
-var searchResults = [];
-var selectedID = -1;
+var hiddenSelectedId = -1;
 
 var lastSearch = "";
 var lastType = "";
@@ -123,6 +122,11 @@ function cancelCreate() {
 function beginCreateContact() {
 	viewer.clearForm();
 	viewer.setCreate();
+	tmp = document.getElementsByClassName("selected");
+	if (tmp.length != 0) {
+		hiddenSelectedId = tmp[0].getAttribute("id");
+	}
+
 }
 
 function messageOn(){
@@ -201,7 +205,7 @@ function createContact() {
         cancelCreate();
         viewer.clearForm();
 				setTimeout(viewer.setEmpty, 4000);
-        selectedID = -1;
+        // selectedID = -1;
         
         reloadSearch();
 			}
@@ -219,28 +223,32 @@ function done() {
 	}
 	else {
 		createContact();
+		hiddenSelectedId = -1;
 	}
 }
 
 function cancel() {
-  if(document.getElementsByClassName("selected")[0] != undefined){
-  	viewer.setViewing();
-	  populateWithSelected();
-  }
-  else{
-    viewer.setEmpty();
-  }
+	if(document.getElementsByClassName("selected")[0] != undefined){
+		viewer.setViewing();
+		if (hiddenSelectedId != -1) {
+			select(hiddenSelectedId);
+			hiddenSelectedId = -1;
+		}
+	}
+	else{
+		viewer.setEmpty();
+	}
 }
 
 // called after add or edit, following the reloadSearch(). If the previously selected contact isn't in the list anymore
-function populateWithSelected() {
-	if(document.getElementsByClassName("selected")[0] != undefined){
-		document.getElementById("contactFirstName").value = document.getElementById(selectedID).getAttribute("firstname");
-		document.getElementById("contactLastName").value = document.getElementById(selectedID).getAttribute("lastname");
-		document.getElementById("contactEmail").value = document.getElementById(selectedID).getAttribute("email");
-		document.getElementById("phoneNumber").value = document.getElementById(selectedID).getAttribute("phone");
-	}
-}
+// function populateWithSelected() {
+// 	if(document.getElementsByClassName("selected")[0] != undefined){
+// 		document.getElementById("contactFirstName").value = document.getElementById(selectedID).getAttribute("firstname");
+// 		document.getElementById("contactLastName").value = document.getElementById(selectedID).getAttribute("lastname");
+// 		document.getElementById("contactEmail").value = document.getElementById(selectedID).getAttribute("email");
+// 		document.getElementById("phoneNumber").value = document.getElementById(selectedID).getAttribute("phone");
+// 	}
+// }
 
 function deleteContact() {
 	var del = confirm("Once released, " + document.getElementById("contactFirstName").value + " " +  document.getElementById("contactLastName").value + " is gone forever. Ok?");
@@ -267,16 +275,15 @@ function deleteContact() {
 				if (this.readyState == 4 && this.status == 200) {
 					var jsonObject = JSON.parse(xhr.responseText);
 					if (jsonObject.booleanResult == 1) {
-             
-            messageOn();
+            			messageOn();
 						var msg = document.getElementById("contactFirstName").value + " " +  document.getElementById("contactLastName").value + " was released outside.";
-            typeMessage(0, msg);
-            setTimeout(messageOff, 3000);
-            cancelCreate();
-            viewer.clearForm();
-				    setTimeout(viewer.setEmpty, 3000);
+						typeMessage(0, msg);
+						setTimeout(messageOff, 3000);
+						cancelCreate();
+						viewer.clearForm();
+						// setTimeout(viewer.setEmpty, 3000);
+						viewer.setEmpty();
 						reloadSearch();
-
 					}
 
 					else {
@@ -509,6 +516,10 @@ function searchLtr(ltr) {
 }
 
 function editContact() {
+	if (viewer.state == viewer.editmode) {
+		return;
+	}
+
 	viewer.setEdit();
 
 	/*var tmp = { ID: document.getElementsByClassName("selected")[0].id };

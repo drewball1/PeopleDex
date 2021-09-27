@@ -5,7 +5,7 @@
     <link href="/css/styles.css" rel="stylesheet">	
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 	
-	<script type="text/javascript">
+	<!-- <script type="text/javascript">
 	document.addEventListener('DOMContentLoaded', function() 
 	{
 		readCookie();
@@ -14,48 +14,51 @@
 	document.addEventListener('DOMContentLoaded', function() {
     searchContacts();
 	}, false);
-	</script>
+	</script> -->
 	
 </head>
 <body>
     <! new code padding-bottom: .5%;>
-	<nav class=menu style= "border-bottom: 2px solid white; position: fixed; display:inline-block; top: 0; width: 100%; color: #f7f7e7; padding-bottom: .3%;  margin-bottom: 2%; padding-top: .25%; height: 2%; background-color:#393e46; font-family: 'pokefont'; font-weight: bold;"> Search By Letter:
-	<ul class="ulnav">
-		<li class="nav" onclick="searchLtr('a')">A</li>
-		<li class="nav" onclick="searchLtr('b')">B</li>
-		<li class="nav" onclick="searchLtr('c')">C</li>
-		<li class="nav" onclick="searchLtr('d')">D</li>
-		<li class="nav" onclick="searchLtr('e')">E</li>
-		<li class="nav" onclick="searchLtr('f')">F</li>
-		<li class="nav" onclick="searchLtr('g')">G</li>
-		<li class="nav" onclick="searchLtr('h')">H</li>
-		<li class="nav" onclick="searchLtr('i')">I</li>
-		<li class="nav" onclick="searchLtr('j')">J</li>
-		<li class="nav" onclick="searchLtr('k')">K</li>
-		<li class="nav" onclick="searchLtr('l')">L</li>
-		<li class="nav" onclick="searchLtr('m')">M</li>
-		<li class="nav" onclick="searchLtr('n')">N</li>
-		<li class="nav" onclick="searchLtr('o')">O</li>
-		<li class="nav" onclick="searchLtr('p')">P</li>
-		<li class="nav" onclick="searchLtr('q')">Q</li>
-		<li class="nav" onclick="searchLtr('r')">R</li>
-		<li class="nav" onclick="searchLtr('s')">S</li>
-		<li class="nav" onclick="searchLtr('t')">T</li>
-		<li class="nav" onclick="searchLtr('u')">U</li>
-		<li class="nav" onclick="searchLtr('v')">V</li>
-		<li class="nav" onclick="searchLtr('w')">W</li>
-		<li class="nav" onclick="searchLtr('x')">X</li>
-		<li class="nav" onclick="searchLtr('y')">Y</li>
-		<li class="nav" onclick="searchLtr('z')">Z</li>
-		<form id="searchBox" style="display: inline; padding-left: 2%;"> 
-			<input type="search" id="searchText" name="query" placeholder="Search...">
-			<button type ="button" class="searchbutton" onclick="searchContacts()">Search Box</button>
-		</form>
-		<li class="logout" style="border-left: 2px solid white; text-align: center;" onclick="doLogout()">Sign Out</li>
-	</ul>
+	<nav id="navbar">
+		<h1>Search By Letter:</h1>
+		<ul class="ulnav">
+			<li class="nav" onclick="searchLtr('a')">A</li>
+			<li class="nav" onclick="searchLtr('b')">B</li>
+			<li class="nav" onclick="searchLtr('c')">C</li>
+			<li class="nav" onclick="searchLtr('d')">D</li>
+			<li class="nav" onclick="searchLtr('e')">E</li>
+			<li class="nav" onclick="searchLtr('f')">F</li>
+			<li class="nav" onclick="searchLtr('g')">G</li>
+			<li class="nav" onclick="searchLtr('h')">H</li>
+			<li class="nav" onclick="searchLtr('i')">I</li>
+			<li class="nav" onclick="searchLtr('j')">J</li>
+			<li class="nav" onclick="searchLtr('k')">K</li>
+			<li class="nav" onclick="searchLtr('l')">L</li>
+			<li class="nav" onclick="searchLtr('m')">M</li>
+			<li class="nav" onclick="searchLtr('n')">N</li>
+			<li class="nav" onclick="searchLtr('o')">O</li>
+			<li class="nav" onclick="searchLtr('p')">P</li>
+			<li class="nav" onclick="searchLtr('q')">Q</li>
+			<li class="nav" onclick="searchLtr('r')">R</li>
+			<li class="nav" onclick="searchLtr('s')">S</li>
+			<li class="nav" onclick="searchLtr('t')">T</li>
+			<li class="nav" onclick="searchLtr('u')">U</li>
+			<li class="nav" onclick="searchLtr('v')">V</li>
+			<li class="nav" onclick="searchLtr('w')">W</li>
+			<li class="nav" onclick="searchLtr('x')">X</li>
+			<li class="nav" onclick="searchLtr('y')">Y</li>
+			<li class="nav" onclick="searchLtr('z')">Z</li>
+		</ul>
+		<div class="nav-right-side">
+			<form id="searchBox" style="display: inline; padding-left: 2%;"> 
+				<input type="search" id="searchText" name="query" placeholder="Search...">
+				<button type ="button" class="searchbutton" onclick="searchContacts()">Search</button>
+			</form>
+			<a class="logout" style="border-left: 2px solid white; text-align: center;" onclick="doLogout()">Sign Out</a>
+		</div>
 	</nav>
 	<div class="page-wrap">
-		<div class="boxed" style="display: block; padding-top: 1%; height:190px; z-index: -1;  margin-top: 6%">
+		<div class="boxed" style="display: block; padding-top: 1%; height:190px; z-index: -1;  margin-top: 60px">
 			<p id="success"></p>
 			<a id="logo" onclick="location.reload()"><img src="https://fontmeme.com/permalink/210826/eb2ec528db4569fc99743c4afb9d8bc3.png"  alt="pokemon-font" border="0"></a>
 		</div>

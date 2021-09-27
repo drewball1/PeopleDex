@@ -8,31 +8,55 @@ input[type=submit] {
 	font-size: 20px;
 }
 
-.nav{
-  display: inline;
-  padding-left: .75%;
-  padding-right: .75%;
-  height: 2%;
-  border-right: 2px solid white;
-  background-color:#393e46;
-  padding-top: .25%;
-  color: #f7f7e7; 
-  font-family: "pokefont";
-  cursor: pointer;
+#navbar {
+	padding: 6px;
+	display: flex;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	/* height: 40px; */
+	color: #f7f7e7;
+	background-color:#393e46;
+	font-family: "pokefont";
+	z-index: 2;
+	justify-content: space-between;
 }
 
-.nav:hover{
+#navbar > * {
+	margin: auto 16px;
+}
+
+#navbar h1 {
+	display: inline-block;
+	font-size: 16px;
+	white-space: nowrap;
+}
+
+.nav{
+	box-sizing: border-box;
+	display: inline-block;
+	font-size: 16px;
+	padding: 5px;
+	width: 20px;
+	flex-grow: 2.2;
+	cursor: pointer;
+	text-align: center;
+	border: 1px solid #474c53;
+	border-radius: 3px;
+}
+
+li.nav:hover{
   background-color:#474c53
 }
 
+.nav-right-side {
+	white-space: nowrap;
+	/* margin: auto; */
+}
+
 .logout{
-  display:inline;
-  float:right;
-  padding-left:6%; 
-  padding-right:10%;
-  font-family: "pokefont";
+  padding: 0 60px 0 40px;
   cursor: pointer;
-  background-color:#393e46;
   font-size:20px;
   color: #f7f7e7;
 }
@@ -41,27 +65,18 @@ input[type=submit] {
   background-color:#474c53;
 }
         
-.ulnav{
-  position: fixed; 
-  top: 0; 
-  width: 100%; 
-  background-color:#393e46;
-  display:inline-block; 
-  height:2.3%; 
-  padding-bottom: .2%; 
-  padding-top: .2%; 
-  margin-bottom: 2%; 
-  z-index: 10;
-  color: #f7f7e7; 
-  font-family: "pokefont";
-  cursor: pointer;
-  border-bottom: 2px solid white;
+.ulnav {
+	font-size: 0;
+	font-weight: bold;
+	flex-basis: 950px;
+	flex-shrink: 1.5;
+	display: flex;
 }
         
 button {
 	font-family: "pokefont";
 	display:inline-block;
-  cursor: pointer;
+  	cursor: pointer;
 }
 
 .top-screen-lights {
